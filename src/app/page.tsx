@@ -1,11 +1,13 @@
-export default function Home() {
+export default async function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h2>kaayell</h2>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-      </footer>
+    <div className="flex flex-col min-h-screen">
+      <section className="flex items-center justify-center">
+        <div className="container-custom text-center text-white">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            home
+          </h1>
+        </div>
+      </section>
     </div>
   );
 }

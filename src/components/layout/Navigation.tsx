@@ -1,0 +1,48 @@
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+type NavigationProps = {
+	isMobile?: boolean;
+	setIsMenuOpen?: (isOpen: boolean) => void;
+};
+
+export default function Navigation({ isMobile, setIsMenuOpen }: NavigationProps) {
+	const pathname = usePathname();
+
+	const navItems = [
+		{ name: 'Home', path: '/' },
+		{ name: 'Gallery', path: '/gallery' },
+	];
+
+	const handleClick = () => {
+		if (isMobile && setIsMenuOpen) {
+			setIsMenuOpen(false);
+		}
+	};
+
+	return (
+		<nav className={isMobile ? 'flex flex-col space-y-4' : 'flex space-x-8'}>
+			{navItems.map((item) => {
+				const isActive =
+					pathname === item.path ||
+					(item.path !== '/' && pathname?.startsWith(item.path));
+
+				return (
+					<Link
+						key={item.name}
+						href={item.path}
+						onClick={handleClick}
+						className={`
+              text-base font-medium transition-colors duration-200
+              ${isActive
+							? 'text-primary-700 font-semibold'
+							: 'text-neutral-600 hover:text-primary-600'}
+            `}
+					>
+						{item.name}
+					</Link>
+				);
+			})}
+		</nav>
+	);
+}

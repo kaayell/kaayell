@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary-500: oklch(0.61 0.2189 292.72);
+  --color-primary-600: oklch(0.54 0.2466 293.01);
+  --color-primary-700: oklch(0.49 0.2412 292.58);
+
+  --color-neutral-50: oklch(0.98 0.0013 106.42);
+  --color-neutral-100: oklch(0.97 0.0013 106.42);
+  --color-neutral-200: oklch(0.92 0.0026 48.72);
+  --color-neutral-300: oklch(0.87 0.0043 56.37);
+  --color-neutral-400: oklch(0.72 0.0091 56.26);
+  --color-neutral-500: oklch(0.55 0.0116 58.07);
+  --color-neutral-600: oklch(0.44 0.0096 73.64);
+  --color-neutral-700: oklch(0.37 0.0087 67.56);
+  --color-neutral-800: oklch(0.27 0.0063 34.3);
+  --color-neutral-900: oklch(0.22 0.0061 56.04);
+  --color-neutral-950: oklch(0.15 0.0041 49.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply text-neutral-800;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl font-bold;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+  p {
+    @apply leading-relaxed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-custom {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
+  }
 }
