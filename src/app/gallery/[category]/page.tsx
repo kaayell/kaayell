@@ -4,14 +4,11 @@ import { getImagesByCategory, getCategories } from '@/lib/cloudinary';
 import GalleryGrid from '@/components/gallery/GalleryGrid';
 import Link from "next/link";
 
-type CategoryPageProps = {
-	params: {
-		category: string;
-	};
-};
+type CategoryPageProps = Promise<{category: string}>
 
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata(props: { params: CategoryPageProps }) {
 	const categories = await getCategories();
+	const params = await props.params
 	const category = categories.find((cat) => cat.slug === params.category);
 
 	if (!category) {
@@ -34,8 +31,9 @@ export async function generateStaticParams() {
 	}));
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage(props: { params: CategoryPageProps }) {
 	const categories = await getCategories();
+	const params = await props.params
 	const category = categories.find((cat) => cat.slug === params.category);
 
 	if (!category) {

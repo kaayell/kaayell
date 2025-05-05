@@ -66,6 +66,7 @@ export async function getCategories(): Promise<CloudinaryCategory[]> {
 	}
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapResourceToArtwork(resource: any): CloudinaryImage {
 	const context = resource.context || {};
 	const publicId = resource.public_id;
