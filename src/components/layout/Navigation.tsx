@@ -10,8 +10,8 @@ export default function Navigation({ isMobile, setIsMenuOpen }: NavigationProps)
 	const pathname = usePathname();
 
 	const navItems = [
-		{ name: 'Home', path: '/' },
-		{ name: 'Gallery', path: '/gallery' },
+		{ name: 'home', path: '/' },
+		{ name: 'gallery', path: '/gallery' },
 	];
 
 	const handleClick = () => {
