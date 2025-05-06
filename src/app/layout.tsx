@@ -5,12 +5,10 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -26,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col bg-neutral-50`}>
+      <body className={`${geistSans.className} ${geistMono.className} min-h-screen flex flex-col`}>
 			  <Header />
 			  <main className="flex-grow">{children}</main>
 			  <Footer />

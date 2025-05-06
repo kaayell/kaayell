@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-primary-500: oklch(0.61 0.2189 292.72);
-  --color-primary-600: oklch(0.54 0.2466 293.01);
-  --color-primary-700: oklch(0.49 0.2412 292.58);
-
   --color-neutral-50: oklch(0.98 0.0013 106.42);
   --color-neutral-100: oklch(0.97 0.0013 106.42);
   --color-neutral-200: oklch(0.92 0.0026 48.72);
@@ -22,10 +16,7 @@
 
 @layer base {
   body {
-    @apply text-neutral-800;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply bg-neutral-50 dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50
   }
   h1 {
     @apply text-4xl md:text-5xl font-bold;
@@ -47,6 +38,6 @@
   }
 
   .card {
-    @apply bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
+    @apply rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
   }
 }

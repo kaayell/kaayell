@@ -22,7 +22,7 @@ export default async function GalleryPage() {
 					<Link
 						href="/gallery"
 						className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-              ${!categories ? 'bg-primary-600 text-white' : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'}`}
+              ${!categories ? 'text-white' : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'}`}
 					>
 						All
 					</Link>

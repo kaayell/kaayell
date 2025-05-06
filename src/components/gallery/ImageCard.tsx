@@ -23,10 +23,6 @@ export default function ImageCard({ image, onClick }: ImageCardProps) {
 					className="object-cover transition-transform duration-500 group-hover:scale-105"
 				/>
 			</div>
-			<div className="p-4">
-				<h3 className="text-xl font-semibold">{image.title}</h3>
-				<p className="text-neutral-600 mt-1">{image.category}</p>
-			</div>
 		</div>
 	);
 }

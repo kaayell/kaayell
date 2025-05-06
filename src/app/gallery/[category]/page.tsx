@@ -63,7 +63,7 @@ export default async function CategoryPage(props: { params: CategoryPageProps })
 							href={`/gallery/${cat.slug}`}
 							className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
                 ${cat.slug === params.category
-								? 'bg-primary-600 text-white'
+								? 'text-white'
 								: 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'}`}
 						>
 							{cat.name}

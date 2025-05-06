@@ -35,8 +35,8 @@ export default function Navigation({ isMobile, setIsMenuOpen }: NavigationProps)
 						className={`
               text-base font-medium transition-colors duration-200
               ${isActive
-							? 'text-primary-700 font-semibold'
-							: 'text-neutral-600 hover:text-primary-600'}
+							? 'font-semibold'
+							: 'text-neutral-600 hover:text-neutral-400'}
             `}
 					>
 						{item.name}
