@@ -21,9 +21,9 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen">
       <section className="flex items-center justify-center">
         <div className="container-custom mt-20 ml-10">
-          <div className={`text-2xl md:text-8xl font-bold mb-6 ${courierPrime.className}`}>
+          <div className={`text-8xl font-bold mb-6 ${courierPrime.className}`}>
             <TypewriterText text="kaay•ell" delay={0.15} speed={0.2}/>
-            <hr />
+            <hr className="border-neutral-700"/>
           </div>
           <div className="flex flex-row items-baseline space-x-3">
             <h2 className={fredericka.className}>KL</h2>
