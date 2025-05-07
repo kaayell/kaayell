@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import ImageCard from './ImageCard';
 import { CloudinaryImage } from '@/types/cloudinary';
-import ImageModal from "@/components/gallery/ImageModal";
+import ImageModal from "@/components/creations/ImageModal";
 
 type GalleryGridProps = {
 	images: CloudinaryImage[];
 };
 
-export default function GalleryGrid({ images }: GalleryGridProps) {
+export default function CreationsGrid({ images }: GalleryGridProps) {
 	const [selectedImage, setSelectedImage] = useState<CloudinaryImage | null>(null);
 
 	const openModal = (image: CloudinaryImage) => {
