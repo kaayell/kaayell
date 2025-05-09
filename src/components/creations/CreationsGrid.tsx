@@ -1,53 +1,71 @@
 'use client';
 
-import { useState } from 'react';
-import ImageCard from './ImageCard';
-import { CloudinaryImage } from '@/types/cloudinary';
-import ImageModal from "@/components/creations/ImageModal";
+import {useState, useEffect, useRef} from 'react';
+import {CloudinaryImage} from '@/lib/types';
+import CreationDetail from "@/components/creations/CreationDetail";
 
-type GalleryGridProps = {
-	images: CloudinaryImage[];
-};
+interface CreationGalleryProps {
+	creations: CloudinaryImage[];
+	initialAnimation?: boolean;
+}
 
-export default function CreationsGrid({ images }: GalleryGridProps) {
-	const [selectedImage, setSelectedImage] = useState<CloudinaryImage | null>(null);
+export default function CreationsGrid({
+																				 creations,
+																			 }: CreationGalleryProps) {
+	const [selectedCreation, setSelectedCreation] = useState<CloudinaryImage | null>(null);
 
-	const openModal = (image: CloudinaryImage) => {
-		setSelectedImage(image);
-		document.body.style.overflow = 'hidden';
+	const galleryRef = useRef<HTMLDivElement>(null);
+	const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+	// Reset refs array when artworks change
+	useEffect(() => {
+		itemsRef.current = itemsRef.current.slice(0, creations.length);
+	}, [creations]);
+
+	const openDetail = (creation: CloudinaryImage) => {
+		setSelectedCreation(creation);
 	};
 
-	const closeModal = () => {
-		setSelectedImage(null);
-		document.body.style.overflow = 'auto';
+	const closeDetail = () => {
+		setSelectedCreation(null);
 	};
 
-	if (images.length === 0) {
+	if (creations.length === 0) {
 		return (
 			<div className="text-center py-12">
-				<p className="text-lg text-neutral-500">No artworks found in this category.</p>
+				<p className="text-lg text-neutral-500">No artworks found.</p>
 			</div>
 		);
 	}
 
 	return (
-		<>
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{images.map((img) => (
-					<ImageCard
-						key={img.id}
-						image={img}
-						onClick={() => openModal(img)}
-					/>
-				))}
+		<div className="relative" ref={galleryRef}>
+			<div className="grid-masonry-gallery">
+				{creations.map((artwork, index) => {
+					return (
+						<div
+							key={artwork.id}
+							ref={(el) => {
+								itemsRef.current[index] = el
+							}}
+							className={`artwork-image w-full rounded-lg overflow-hidden cursor-pointer`}
+							onClick={() => openDetail(artwork)}
+						>
+							<img
+								src={artwork.imageUrl}
+								alt={artwork.title}
+							/>
+						</div>
+					);
+				})}
 			</div>
 
-			{selectedImage && (
-				<ImageModal
-					image={selectedImage}
-					onClose={closeModal}
+			{selectedCreation && (
+				<CreationDetail
+					creation={selectedCreation}
+					onClose={closeDetail}
 				/>
 			)}
-		</>
+		</div>
 	);
 }

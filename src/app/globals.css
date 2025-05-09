@@ -1,43 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-neutral-50: oklch(0.98 0.0013 106.42);
-  --color-neutral-100: oklch(0.97 0.0013 106.42);
-  --color-neutral-200: oklch(0.92 0.0026 48.72);
-  --color-neutral-300: oklch(0.87 0.0043 56.37);
-  --color-neutral-400: oklch(0.72 0.0091 56.26);
-  --color-neutral-500: oklch(0.55 0.0116 58.07);
-  --color-neutral-600: oklch(0.44 0.0096 73.64);
-  --color-neutral-700: oklch(0.37 0.0087 67.56);
-  --color-neutral-800: oklch(0.27 0.0063 34.3);
-  --color-neutral-900: oklch(0.22 0.0061 56.04);
-  --color-neutral-950: oklch(0.15 0.0041 49.25);
+    --color-neutral-50: oklch(0.98 0.0013 106.42);
+    --color-neutral-100: oklch(0.97 0.0013 106.42);
+    --color-neutral-200: oklch(0.92 0.0026 48.72);
+    --color-neutral-300: oklch(0.87 0.0043 56.37);
+    --color-neutral-400: oklch(0.72 0.0091 56.26);
+    --color-neutral-500: oklch(0.55 0.0116 58.07);
+    --color-neutral-600: oklch(0.44 0.0096 73.64);
+    --color-neutral-700: oklch(0.37 0.0087 67.56);
+    --color-neutral-800: oklch(0.27 0.0063 34.3);
+    --color-neutral-900: oklch(0.22 0.0061 56.04);
+    --color-neutral-950: oklch(0.15 0.0041 49.25);
 }
 
 @layer base {
-  body {
-    @apply bg-neutral-300 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-300
-  }
-  h1 {
-    @apply text-4xl md:text-5xl font-bold;
-  }
-  h2 {
-    @apply text-3xl md:text-4xl font-bold;
-  }
-  h3 {
-    @apply text-2xl md:text-3xl font-semibold;
-  }
-  p {
-    @apply leading-relaxed;
-  }
+    body {
+        @apply bg-neutral-300 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-300
+    }
+
+    h1 {
+        @apply text-4xl md:text-5xl font-bold;
+    }
+
+    h2 {
+        @apply text-3xl md:text-4xl font-bold;
+    }
+
+    h3 {
+        @apply text-2xl md:text-3xl font-semibold;
+    }
+
+    p {
+        @apply leading-relaxed;
+    }
 }
 
 @layer components {
-  .container-custom {
-    @apply mx-auto px-4 sm:px-6 lg:px-8;
-  }
+    .container-custom {
+        @apply mx-auto px-4 sm:px-6 lg:px-8;
+    }
 
-  .card {
-    @apply rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
-  }
+    .grid-masonry-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-auto-flow: dense;
+        gap: 16px;
+    }
 }

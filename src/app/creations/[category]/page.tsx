@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { getImagesByCategory, getCategories } from '@/lib/cloudinary';
-import CreationsGrid from '@/components/creations/CreationsGrid';
 import Link from "next/link";
+import CreationsGrid from "@/components/creations/CreationsGrid";
 
 type CategoryPageProps = Promise<{category: string}>
 
 export async function generateMetadata(props: { params: CategoryPageProps }) {
 	const categories = await getCategories();
 	const params = await props.params
-	const category = categories.find((cat) => cat.slug === params.category);
+	const category = categories.find((cat) => cat.id === params.category);
 
 	if (!category) {
 		return {
@@ -27,43 +27,36 @@ export async function generateStaticParams() {
 	const categories = await getCategories();
 
 	return categories.map((category) => ({
-		category: category.slug,
+		category: category.id,
 	}));
 }
 
 export default async function CategoryPage(props: { params: CategoryPageProps }) {
 	const categories = await getCategories();
 	const params = await props.params
-	const category = categories.find((cat) => cat.slug === params.category);
+	const category = categories.find((cat) => cat.id === params.category);
 
 	if (!category) {
 		notFound();
 	}
 
-	const artworks = await getImagesByCategory(params.category);
+	const images = await getImagesByCategory(params.category);
 
 	return (
 		<div className="py-12">
 			<div className="container-custom">
-				<h1 className="text-4xl font-bold text-center mb-2">{category.name}</h1>
-				<p className="text-neutral-600 text-center mb-10 max-w-2xl mx-auto">
-					{category.description || `Browse my collection of ${category.name.toLowerCase()} fiber art pieces.`}
-				</p>
-
 				<div className="flex flex-wrap justify-center gap-2 mb-10">
 					<Link href="/creations"
-						className="px-4 py-2 rounded-full bg-neutral-200 text-neutral-700 text-sm font-medium hover:bg-neutral-300 transition-colors"
+						className="px-4 py-2 text-sm hover:underline hover:underline-offset-8 hover:text-neutral-500"
 					>
-						All
+						all
 					</Link>
 					{categories.map((cat) => (
 						<Link
-							key={cat.slug}
-							href={`/creations/${cat.slug}`}
-							className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                ${cat.slug === params.category
-								? 'text-white'
-								: 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'}`}
+							key={cat.id}
+							href={`/creations/${cat.id}`}
+							className={`px-4 py-2 text-sm font-medium
+                ${cat.id === params.category ? 'text-white' : 'hover:underline hover:underline-offset-8 hover:text-neutral-500'}`}
 						>
 							{cat.name}
 						</Link>
@@ -71,7 +64,7 @@ export default async function CategoryPage(props: { params: CategoryPageProps })
 				</div>
 
 				<Suspense fallback={<div className="text-center py-10">Loading creations...</div>}>
-					<CreationsGrid images={artworks} />
+					<CreationsGrid creations={images} />
 				</Suspense>
 			</div>
 		</div>
