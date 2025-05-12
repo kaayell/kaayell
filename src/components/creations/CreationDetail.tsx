@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import {CloudinaryImage} from '@/lib/types';
+import {CloudinaryImage} from '@/lib/cloudinary';
 
 interface CreationDetailProps {
 	creation: CloudinaryImage;

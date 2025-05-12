@@ -1,7 +1,7 @@
 'use client';
 
-import {useState, useEffect, useRef} from 'react';
-import {CloudinaryImage} from '@/lib/types';
+import {useState, useRef} from 'react';
+import {CloudinaryImage} from '@/lib/cloudinary';
 import CreationDetail from "@/components/creations/CreationDetail";
 
 interface CreationGalleryProps {
@@ -11,14 +11,7 @@ interface CreationGalleryProps {
 
 export default function CreationsGrid({creations}: CreationGalleryProps) {
 	const [selectedCreation, setSelectedCreation] = useState<CloudinaryImage | null>(null);
-
 	const galleryRef = useRef<HTMLDivElement>(null);
-	const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-	// Reset refs array when artworks change
-	useEffect(() => {
-		itemsRef.current = itemsRef.current.slice(0, creations.length);
-	}, [creations]);
 
 	const openDetail = (creation: CloudinaryImage) => {
 		setSelectedCreation(creation);
@@ -43,9 +36,6 @@ export default function CreationsGrid({creations}: CreationGalleryProps) {
 					return (
 						<div
 							key={artwork.id}
-							ref={(el) => {
-								itemsRef.current[index] = el
-							}}
 							className={`artwork-image w-full rounded-lg overflow-hidden cursor-pointer`}
 							onClick={() => openDetail(artwork)}
 						>
