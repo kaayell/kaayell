@@ -9,9 +9,7 @@ interface CreationGalleryProps {
 	initialAnimation?: boolean;
 }
 
-export default function CreationsGrid({
-																				 creations,
-																			 }: CreationGalleryProps) {
+export default function CreationsGrid({creations}: CreationGalleryProps) {
 	const [selectedCreation, setSelectedCreation] = useState<CloudinaryImage | null>(null);
 
 	const galleryRef = useRef<HTMLDivElement>(null);

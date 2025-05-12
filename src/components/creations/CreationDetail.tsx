@@ -19,8 +19,7 @@ export default function CreationDetail({creation, onClose}: CreationDetailProps)
 	const infoRef = useRef<HTMLDivElement>(null);
 	const thumbnailsRef = useRef<HTMLDivElement>(null);
 
-	// Generate mock additional images for the demo
-	// In production, these would come from your Cloudinary data
+	// TODO: get images from cloudinary
 	const additionalImages = [
 		creation.imageUrl,
 		creation.imageUrl.replace(/v\d+\//, 'v1625124401/'), // Mock different version
@@ -29,47 +28,22 @@ export default function CreationDetail({creation, onClose}: CreationDetailProps)
 		creation.imageUrl.replace(/v\d+\//, 'v1625124404/'), // Mock different version
 	];
 
-	// Close on escape key, but only if not in fullscreen mode
 	useEffect(() => {
 		const handleEscapeKey = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
 				onClose();
 			}
 		};
-
-		// Handle keyboard navigation
-		const handleKeyNavigation = (event: KeyboardEvent) => {
-			if (event.key === 'ArrowRight') {
-				goToNextImage();
-			} else if (event.key === 'ArrowLeft') {
-				goToPrevImage();
-			}
-		};
-
 		window.addEventListener('keydown', handleEscapeKey);
-		window.addEventListener('keydown', handleKeyNavigation);
 
 		return () => {
 			window.removeEventListener('keydown', handleEscapeKey);
-			window.removeEventListener('keydown', handleKeyNavigation);
 		};
 	}, [onClose, selectedImageIndex]);
 
 	const handleThumbnailClick = (image: string, index: number) => {
 		setSelectedImage(image);
 		setSelectedImageIndex(index);
-	};
-
-	const goToNextImage = () => {
-		const nextIndex = (selectedImageIndex + 1) % additionalImages.length;
-		setSelectedImage(additionalImages[nextIndex]);
-		setSelectedImageIndex(nextIndex);
-	};
-
-	const goToPrevImage = () => {
-		const prevIndex = (selectedImageIndex - 1 + additionalImages.length) % additionalImages.length;
-		setSelectedImage(additionalImages[prevIndex]);
-		setSelectedImageIndex(prevIndex);
 	};
 
 	return (

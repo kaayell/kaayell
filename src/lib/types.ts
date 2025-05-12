@@ -1,7 +1,7 @@
 export interface CloudinaryImage {
 	id: string;
 	description?: string;
-	category: string;
+	folder: string;
 	title: string;
 	imageUrl: string;
 	highResImageUrl: string;

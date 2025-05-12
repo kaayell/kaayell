@@ -7,10 +7,10 @@ cloudinary.config({
 	api_secret: process.env.NEXT_CLOUDINARY_API_SECRET,
 });
 
-export async function getAllImages(): Promise<CloudinaryImage[]> {
+export async function getAllShowcaseImages(): Promise<CloudinaryImage[]> {
 	try {
 		const result = await cloudinary.search
-			.expression('folder:fiber-art/*')
+			.expression('folder:fiber-art/* AND tags=showcase')
 			.sort_by('created_at', 'desc')
 			.max_results(100)
 			.execute();
@@ -67,15 +67,11 @@ export async function getCategories(): Promise<CloudinaryCategory[]> {
 function mapResourceToArtwork(resource: any): CloudinaryImage {
 	const publicId = resource.public_id;
 
-	// Extract category from the folder structure or context
-	const folderParts = resource.asset_folder.split('/');
-	const categoryFromFolder = folderParts.length > 1 ? folderParts[1] : 'uncategorized';
-
 	return {
 		id: publicId,
 		title: resource.display_name,
 		description: resource.description || '',
-		category: categoryFromFolder,
+		folder: resource.asset_folder,
 		imageUrl: cloudinary.url(publicId, {
 			width: 800,
 			height: 800,

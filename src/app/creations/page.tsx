@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getAllImages, getCategories } from '@/lib/cloudinary';
+import { getAllShowcaseImages, getCategories } from '@/lib/cloudinary';
 import Link from 'next/link';
 import CreationsGrid from "@/components/creations/CreationsGrid";
 
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function CreationsPage() {
-	const creations = await getAllImages();
+	const creations = await getAllShowcaseImages();
 	const categories = await getCategories();
 
 	return (
