@@ -1,8 +1,8 @@
 'use client';
 
-import {useState, useRef} from 'react';
+import Link from "next/link";
 import {CloudinaryImage} from '@/lib/cloudinary';
-import CreationDetail from "@/components/creations/CreationDetail";
+import {CldImage} from "next-cloudinary";
 
 interface CreationGalleryProps {
 	creations: CloudinaryImage[];
@@ -10,17 +10,6 @@ interface CreationGalleryProps {
 }
 
 export default function CreationsGrid({creations}: CreationGalleryProps) {
-	const [selectedCreation, setSelectedCreation] = useState<CloudinaryImage | null>(null);
-	const galleryRef = useRef<HTMLDivElement>(null);
-
-	const openDetail = (creation: CloudinaryImage) => {
-		setSelectedCreation(creation);
-	};
-
-	const closeDetail = () => {
-		setSelectedCreation(null);
-	};
-
 	if (creations.length === 0) {
 		return (
 			<div className="text-center py-12">
@@ -30,30 +19,28 @@ export default function CreationsGrid({creations}: CreationGalleryProps) {
 	}
 
 	return (
-		<div className="relative" ref={galleryRef}>
+		<div className="relative">
 			<div className="grid-masonry-gallery">
-				{creations.map((artwork, index) => {
+				{creations.map((image) => {
 					return (
 						<div
-							key={artwork.id}
+							key={image.asset_id}
 							className={`artwork-image w-full rounded-lg overflow-hidden cursor-pointer`}
-							onClick={() => openDetail(artwork)}
 						>
-							<img
-								src={artwork.imageUrl}
-								alt={artwork.title}
-							/>
+							<Link
+								href={`/creations/${image.public_id}`}
+							>
+								<CldImage
+									src={image.public_id}
+									alt={image.display_name}
+									width={"500"}
+									height={"700"}
+								/>
+							</Link>
 						</div>
 					);
 				})}
 			</div>
-
-			{selectedCreation && (
-				<CreationDetail
-					creation={selectedCreation}
-					onClose={closeDetail}
-				/>
-			)}
 		</div>
 	);
 }

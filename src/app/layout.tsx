@@ -19,14 +19,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+	modal
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
+	modal: React.ReactNode
 }>) {
   return (
     <html lang="en">
       <body className={`${geistSans.className} ${geistMono.className} min-h-screen flex flex-col`}>
 			  <Header />
 			  <main className="flex-grow">{children}</main>
+				{modal}
+				<div id={"modal-root"} />
 			  <Footer />
       </body>
     </html>

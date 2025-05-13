@@ -7,12 +7,12 @@ cloudinary.config({
 });
 
 export interface CloudinaryImage {
-	id: string;
-	description?: string;
-	folder: string;
-	title: string;
-	imageUrl: string;
-	highResImageUrl: string;
+	asset_id: string;
+	public_id: string;
+	display_name: string;
+	related_assets?: CloudinaryImage[];
+	width: number;
+	height: number;
 }
 
 export async function getAllShowcaseImages(): Promise<CloudinaryImage[]> {
@@ -22,49 +22,20 @@ export async function getAllShowcaseImages(): Promise<CloudinaryImage[]> {
 			.sort_by('created_at', 'desc')
 			.max_results(100)
 			.execute();
-
-		return result.resources.map(mapResourceToArtwork);
+		return result.resources as CloudinaryImage[];
 	} catch (error) {
 		console.error('Error fetching artworks from Cloudinary:', error);
 		return [];
 	}
 }
-export async function getImagesByFolderAndTag(folder: string, tag: string): Promise<CloudinaryImage[]> {
+
+export async function getImageWithRelatedAssets(public_id: string): Promise<CloudinaryImage> {
 	try {
-		const result = await cloudinary.search
-			.expression(`folder:${folder} AND tags=${tag}`)
-			.sort_by('created_at', 'desc')
-			.max_results(100)
-			.execute();
-
-		return result.resources.map(mapResourceToArtwork);
+		 return await cloudinary.api
+			.resource(public_id, {related: true})
+			.then(r => (r as CloudinaryImage))
 	} catch (error) {
 		console.error('Error fetching artworks from Cloudinary:', error);
-		return [];
+		throw error;
 	}
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapResourceToArtwork(resource: any): CloudinaryImage {
-	const publicId = resource.public_id;
-
-	return {
-		id: publicId,
-		title: resource.display_name,
-		description: resource.description || '',
-		folder: resource.asset_folder,
-		imageUrl: cloudinary.url(publicId, {
-			width: 800,
-			height: 800,
-			crop: 'fill',
-			quality: 'auto',
-			fetch_format: 'auto',
-		}),
-		highResImageUrl: cloudinary.url(publicId, {
-			quality: 'auto',
-			fetch_format: 'auto',
-		}),
-	};
-}
-
-
