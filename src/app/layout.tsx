@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-
-const geistSans = Geist({
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-});
+import {geistMono, geistSans} from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "kaayell",

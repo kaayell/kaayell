@@ -1,20 +1,6 @@
-import {Courier_Prime, Fredericka_the_Great, Lavishly_Yours} from "next/font/google";
 import TypewriterText from "@/components/ui/TypewriterText";
+import {courierPrime, fredericka, lavishlyYours} from "@/lib/fonts";
 
-const lavishlyYours = Lavishly_Yours({
-  weight: ["400"],
-  subsets: ["latin"]
-});
-
-const fredericka = Fredericka_the_Great({
-  weight: ["400"],
-  subsets: ["latin"]
-})
-
-const courierPrime = Courier_Prime({
-  weight: ["400", "700"],
-  subsets: ["latin"]
-})
 
 export default async function Home() {
   return (

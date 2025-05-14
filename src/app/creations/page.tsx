@@ -7,7 +7,7 @@ export const metadata = {
 	description: '',
 };
 
-export default async function CreationsPage() {
+export default async function Page() {
 	const creations = await getAllShowcaseImages();
 
 	return (
