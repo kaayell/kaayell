@@ -15,6 +15,7 @@ export default function Navigation({
   const navItems = [
     { name: "home", path: "/" },
     { name: "creations", path: "/creations" },
+    { name: "experience", path: "/experience" },
   ];
 
   const handleClick = () => {
