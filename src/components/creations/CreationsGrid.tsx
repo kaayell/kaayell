@@ -19,26 +19,24 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
   }
 
   return (
-    <div className="relative">
-      <div className="grid-masonry-gallery">
-        {creations.map((image) => {
-          return (
-            <div
-              key={image.asset_id}
-              className={`artwork-image w-full rounded-lg overflow-hidden cursor-pointer`}
-            >
-              <Link href={`/creations/${image.public_id}`}>
-                <CldImage
-                  src={image.public_id}
-                  alt={image.display_name}
-                  width={"500"}
-                  height={"700"}
-                />
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+    <div className="grid-masonry-gallery">
+      {creations.map((image) => {
+        return (
+          <div
+            key={image.asset_id}
+            className="rounded-lg overflow-hidden cursor-pointer"
+          >
+            <Link href={`/creations/${image.public_id}`}>
+              <CldImage
+                src={image.public_id}
+                alt={image.display_name}
+                width={image.width}
+                height={image.height}
+              />
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }

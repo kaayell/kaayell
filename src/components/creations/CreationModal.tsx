@@ -13,9 +13,7 @@ export function CreationModal({ children }: { children: React.ReactNode }) {
   return (
     <Dialog open={true} onClose={onDismiss} className={"relative z-50"}>
       <div className="fixed inset-0 w-screen overflow-y-auto p-14 bg-black/70">
-        <DialogPanel
-          className={"w-full h-full max-w-[1800px] max-h-screen space-y-4 p-4"}
-        >
+        <DialogPanel className="w-full h-full max-w-[1800px] max-h-screen space-y-4 p-4">
           {children}
 
           <button

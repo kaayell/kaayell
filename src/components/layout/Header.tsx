@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="container-custom mx-auto py-4">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <svg
             xmlns="http://www.w3.org/2000/svg"
