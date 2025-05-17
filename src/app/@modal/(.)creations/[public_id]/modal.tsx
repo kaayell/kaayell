@@ -1,42 +1,50 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Dialog, DialogPanel } from "@headlessui/react";
+import { MouseEventHandler, useCallback, useEffect, useRef } from "react";
 
 export function Modal({ children }: { children: React.ReactNode }) {
+  const overlay = useRef(null);
+  const wrapper = useRef(null);
   const router = useRouter();
 
-  function onDismiss() {
+  const onDismiss = useCallback(() => {
     router.back();
-  }
+  }, [router]);
+
+  const onClick: MouseEventHandler = useCallback(
+    (e) => {
+      if (e.target === overlay.current || e.target === wrapper.current) {
+        if (onDismiss) onDismiss();
+      }
+    },
+    [onDismiss, overlay, wrapper],
+  );
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onDismiss();
+    },
+    [onDismiss],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown]);
 
   return (
-    <Dialog open={true} onClose={onDismiss} className={"relative z-50"}>
-      <div className="fixed inset-0 w-screen overflow-y-auto p-14 bg-black/70">
-        <DialogPanel className="w-full h-full max-w-[1800px] max-h-screen space-y-4 p-4">
-          {children}
-
-          <button
-            onClick={onDismiss}
-            className="absolute top-4 right-4 bg-white/10 backdrop-blur-sm p-2 rounded-full hover:bg-white/20 transition-colors z-10"
-            aria-label="Close"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </DialogPanel>
+    <div
+      ref={overlay}
+      className="fixed inset-0 w-screen overflow-y-auto p-14 bg-black/70"
+      onClick={onClick}
+    >
+      <div
+        ref={wrapper}
+        className="w-full h-full max-w-[1800px] max-h-screen space-y-4 p-4"
+      >
+        {children}
       </div>
-    </Dialog>
+    </div>
   );
 }
