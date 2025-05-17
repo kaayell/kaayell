@@ -1,7 +1,6 @@
 import { getImageWithRelatedAssets } from "@/lib/cloudinary";
-import { Suspense } from "react";
 import CreationDetailPage from "@/components/creations/CreationDetail";
-import { CreationModal } from "@/components/creations/CreationModal";
+import { Modal } from "@/app/@modal/(.)creations/[public_id]/modal";
 
 export default async function Page(props: {
   params: Promise<{ public_id: string }>;
@@ -10,12 +9,8 @@ export default async function Page(props: {
   const creation = await getImageWithRelatedAssets(publicId);
 
   return (
-    <CreationModal>
-      <Suspense
-        fallback={<div className="text-center py-10">Loading creations...</div>}
-      >
-        <CreationDetailPage creation={creation} />
-      </Suspense>
-    </CreationModal>
+    <Modal>
+      <CreationDetailPage creation={creation} />
+    </Modal>
   );
 }

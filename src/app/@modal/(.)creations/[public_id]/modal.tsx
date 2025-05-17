@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Dialog, DialogPanel } from "@headlessui/react";
 
-export function CreationModal({ children }: { children: React.ReactNode }) {
+export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   function onDismiss() {

@@ -32,6 +32,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
                 alt={image.display_name}
                 width={image.width}
                 height={image.height}
+                className="h-full object-cover transition-transform duration-500 hover:scale-110"
               />
             </Link>
           </div>
