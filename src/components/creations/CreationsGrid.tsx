@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
+import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 interface CreationGalleryProps {
   creations: CloudinaryImage[];
@@ -10,6 +12,7 @@ interface CreationGalleryProps {
 }
 
 export default function CreationsGrid({ creations }: CreationGalleryProps) {
+  const router = useRouter();
   if (creations.length === 0) {
     return (
       <div className="text-center py-12">
@@ -22,20 +25,22 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
     <div className="grid-masonry-gallery">
       {creations.map((image) => {
         return (
-          <div
-            key={image.asset_id}
-            className="rounded-lg overflow-hidden cursor-pointer"
+          <motion.div
+            layout
+            layoutId={`creation-${image.public_id}`}
+            key={image.public_id}
+            transition={{ type: "spring" }}
+            className="rounded-lg overflow-hidden cursor-crosshair"
+            onClick={() => router.push(`/creations/${image.public_id}`)}
           >
-            <Link href={`/creations/${image.public_id}`}>
-              <CldImage
-                src={image.public_id}
-                alt={image.display_name}
-                width={image.width}
-                height={image.height}
-                className="h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </Link>
-          </div>
+            <CldImage
+              src={image.public_id}
+              alt={image.display_name}
+              width={image.width}
+              height={image.height}
+              className="h-full object-cover transition-transform duration-500 hover:scale-110"
+            />
+          </motion.div>
         );
       })}
     </div>

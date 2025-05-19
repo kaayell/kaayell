@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler, useCallback, useEffect, useRef } from "react";
 
@@ -34,17 +35,23 @@ export function Modal({ children }: { children: React.ReactNode }) {
   }, [onKeyDown]);
 
   return (
-    <div
-      ref={overlay}
-      className="fixed inset-0 w-screen overflow-y-auto p-14 bg-black/70"
-      onClick={onClick}
-    >
+    <AnimatePresence>
       <div
-        ref={wrapper}
-        className="w-full h-full max-w-[1800px] max-h-screen space-y-4 p-4"
+        ref={overlay}
+        className="absolute z-50 inset-0 p-14 bg-black/70"
+        onClick={onClick}
       >
-        {children}
+        <motion.div
+          ref={wrapper}
+          className="w-full h-full max-h-screen"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {children}
+        </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 }
