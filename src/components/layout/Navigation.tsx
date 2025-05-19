@@ -16,7 +16,6 @@ export default function Navigation({
   const pathname = usePathname();
 
   const navItems = [
-    { name: "home", path: "/" },
     { name: "creations", path: "/creations" },
     { name: "experience", path: "/experience" },
   ];
