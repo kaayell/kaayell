@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
 import { motion } from "motion/react";
