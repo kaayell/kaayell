@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 z-50 w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bottom-0">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex space-x-4">
           <a
             href="https://instagram.com/kaayell"

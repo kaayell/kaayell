@@ -43,7 +43,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
       >
         <motion.div
           ref={wrapper}
-          className="w-full h-full max-h-screen"
+          className="w-full h-screen max-h-[90vh] bg-neutral-300 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-300"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}

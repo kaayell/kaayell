@@ -30,7 +30,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
             layoutId={`creation-${image.public_id}`}
             key={image.public_id}
             transition={{ type: "spring" }}
-            className="rounded-lg overflow-hidden cursor-crosshair"
+            className="grid-item rounded-lg overflow-hidden cursor-crosshair"
             onClick={() => router.push(`/creations/${image.public_id}`)}
           >
             <CldImage

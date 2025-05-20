@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -34,16 +33,11 @@ export default function Navigation({
           (item.path !== "/" && pathname?.startsWith(item.path));
 
         return (
-          <motion.div
+          <Link
             key={item.name}
-            whileHover={{ scale: 1.2 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Link
-              key={item.name}
-              href={item.path}
-              onClick={handleClick}
-              className={`
+            href={item.path}
+            onClick={handleClick}
+            className={`
               text-base font-medium transition-colors duration-200
               ${
                 isActive
@@ -51,10 +45,9 @@ export default function Navigation({
                   : "text-neutral-600 hover:text-neutral-400"
               }
             `}
-            >
-              {item.name}
-            </Link>
-          </motion.div>
+          >
+            {item.name}
+          </Link>
         );
       })}
     </nav>
