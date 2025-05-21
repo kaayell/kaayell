@@ -50,17 +50,6 @@ export default function Navigation({
     },
   };
 
-  const desktopLinkVariants = {
-    hover: {
-      scale: 1.05,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10,
-      },
-    },
-  };
-
   return (
     <motion.nav
       className={
@@ -76,7 +65,7 @@ export default function Navigation({
           (item.path !== "/" && pathname?.startsWith(item.path));
 
         return isMobile ? (
-          // Mobile navigation item with animation
+          // Mobile
           <motion.div
             key={item.name}
             variants={itemVariants}
@@ -94,16 +83,33 @@ export default function Navigation({
             </Link>
           </motion.div>
         ) : (
-          // Desktop navigation item with hover animation
+          // Desktop
           <motion.div
             key={item.name}
+            initial="initial"
             whileHover="hover"
-            variants={desktopLinkVariants}
+            className="relative flex flex-col items-center"
           >
+            {/* Top rainbow line */}
+            <motion.div
+              className="absolute top-0 h-px w-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"
+              variants={{
+                initial: { scaleX: 0, opacity: 0, originX: 0 },
+                hover: {
+                  scaleX: 1,
+                  opacity: 1,
+                  transition: {
+                    type: "easeInOut",
+                    delay: 0.1,
+                  },
+                },
+              }}
+            />
+
             <Link
               href={item.path}
               className={`
-                text-base font-medium transition-colors duration-200
+                text-base font-medium py-1
                 ${
                   isActive
                     ? "font-semibold"
@@ -113,6 +119,22 @@ export default function Navigation({
             >
               {item.name}
             </Link>
+
+            {/* Bottom rainbow line */}
+            <motion.div
+              className="absolute bottom-0 h-px w-full bg-gradient-to-r to-blue-500  via-pink-500  from-purple-500"
+              variants={{
+                initial: { scaleX: 0, opacity: 0, originX: 1 },
+                hover: {
+                  scaleX: 1,
+                  opacity: 1,
+                  transition: {
+                    type: "easeInOut",
+                    delay: 0.1,
+                  },
+                },
+              }}
+            />
           </motion.div>
         );
       })}
