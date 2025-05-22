@@ -2,8 +2,8 @@
 
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
-import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 interface CreationGalleryProps {
   creations: CloudinaryImage[];
@@ -12,6 +12,32 @@ interface CreationGalleryProps {
 
 export default function CreationsGrid({ creations }: CreationGalleryProps) {
   const router = useRouter();
+
+  // Calculate row spans based on image aspect ratios
+  const imagesWithSpans = useMemo(() => {
+    return creations.map((image) => {
+      const aspectRatio = image.aspect_ratio;
+
+      let gridSpan;
+
+      if (aspectRatio > 1.0) {
+        gridSpan = [2, 1]; //horizontal square
+      } else if (aspectRatio > 0.75) {
+        gridSpan = [2, 2]; //large square
+      } else if (aspectRatio > 0.5) {
+        gridSpan = [1, 2]; //vertical rectangle
+      } else {
+        gridSpan = [1, 1]; //small square
+      }
+
+      return {
+        ...image,
+        colSpan: gridSpan[0],
+        rowSpan: gridSpan[1],
+      };
+    });
+  }, [creations]);
+
   if (creations.length === 0) {
     return (
       <div className="text-center py-12">
@@ -22,14 +48,15 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
 
   return (
     <div className="grid-masonry-gallery">
-      {creations.map((image) => {
+      {imagesWithSpans.map((image) => {
         return (
-          <motion.div
-            layout
-            layoutId={`creation-${image.public_id}`}
+          <div
             key={image.public_id}
-            transition={{ type: "spring" }}
-            className="grid-item rounded-lg overflow-hidden cursor-crosshair"
+            className={`col-span-${image.colSpan} row-span-${image.rowSpan} rounded-lg overflow-hidden cursor-crosshair`}
+            style={{
+              gridColumn: `span ${image.colSpan}`,
+              gridRow: `span ${image.rowSpan}`,
+            }}
             onClick={() => router.push(`/creations/${image.public_id}`)}
           >
             <CldImage
@@ -37,9 +64,9 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
               alt={image.display_name}
               width={image.width}
               height={image.height}
-              className="h-full object-cover transition-transform duration-500 hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             />
-          </motion.div>
+          </div>
         );
       })}
     </div>

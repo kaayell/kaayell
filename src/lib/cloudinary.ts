@@ -13,6 +13,7 @@ export interface CloudinaryImage {
   related_assets?: CloudinaryImage[];
   width: number;
   height: number;
+  aspect_ratio: number;
 }
 
 export async function getAllShowcaseImages(): Promise<CloudinaryImage[]> {
