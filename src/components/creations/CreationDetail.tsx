@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
+import Loading from "@/components/ui/Loading";
 
 interface CreationDetailPageProps {
   creation: CloudinaryImage;
@@ -42,18 +43,7 @@ export default function CreationDetailPage({
           <div className="w-full h-full flex items-center justify-center">
             <div className="relative w-full h-full max-w-3xl max-h-[90vh] overflow-hidden">
               {/* Loading Indicator */}
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex items-center justify-center">
-                    <div className="flex items-center justify-center space-x-2">
-                      <span className="sr-only">Loading...</span>
-                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 [animation-delay:-0.3s] dark:bg-neutral-300"></div>
-                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 [animation-delay:-0.15s] dark:bg-neutral-300"></div>
-                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 dark:bg-neutral-300"></div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {isLoading && <Loading />}
 
               <CldImage
                 src={selectedImage.public_id}
