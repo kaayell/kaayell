@@ -13,10 +13,18 @@ export default function CreationDetailPage({
 }: CreationDetailPageProps) {
   const [selectedImage, setSelectedImage] = useState<CloudinaryImage>(creation);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleThumbnailClick = (image: CloudinaryImage, index: number) => {
-    setSelectedImage(image);
-    setSelectedImageIndex(index);
+    if (selectedImageIndex !== index) {
+      setIsLoading(true);
+      setSelectedImage(image);
+      setSelectedImageIndex(index);
+    }
+  };
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
   };
 
   const relatedAssets = creation.related_assets
@@ -30,15 +38,32 @@ export default function CreationDetailPage({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Left Side */}
-        <div className="w-full h-[50vh] max-h-[90vh] md:h-screen flex items-center justify-center">
+        <div className="w-full h-[50vh] max-h-[90vh] md:h-screen flex items-center justify-center relative">
           <div className="w-full h-full flex items-center justify-center">
             <div className="relative w-full h-full max-w-3xl max-h-[90vh] overflow-hidden">
+              {/* Loading Indicator */}
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center space-x-2">
+                      <span className="sr-only">Loading...</span>
+                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 [animation-delay:-0.3s] dark:bg-neutral-300"></div>
+                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 [animation-delay:-0.15s] dark:bg-neutral-300"></div>
+                      <div className="h-8 w-8 animate-bounce rounded-full bg-neutral-900 dark:bg-neutral-300"></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <CldImage
                 src={selectedImage.public_id}
                 width={creation.width}
                 height={creation.height}
                 alt={creation.display_name}
-                className="w-full h-full object-contain transition-opacity duration-300"
+                className={`w-full h-full object-contain transition-opacity duration-300 ${
+                  isLoading ? "opacity-0" : "opacity-100"
+                }`}
+                onLoad={handleImageLoad}
               />
             </div>
           </div>
@@ -60,7 +85,7 @@ export default function CreationDetailPage({
                     selectedImageIndex === index
                       ? "ring-2 ring-primary-500 scale-[0.96]"
                       : "hover:opacity-90"
-                  }`}
+                  } ${isLoading && selectedImageIndex === index ? "opacity-50 pointer-events-none" : ""}`}
                   onClick={() => handleThumbnailClick(image, index)}
                 >
                   <div className="w-full h-full overflow-hidden">
@@ -82,7 +107,11 @@ export default function CreationDetailPage({
             {relatedAssets.map((image, index) => (
               <div
                 key={index}
-                className={`aspect-square rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${selectedImageIndex === index ? "ring-2 ring-primary-500 scale-[0.96]" : "hover:opacity-90"}`}
+                className={`aspect-square rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${
+                  selectedImageIndex === index
+                    ? "ring-2 ring-primary-500 scale-[0.96]"
+                    : "hover:opacity-90"
+                } ${isLoading && selectedImageIndex === index ? "opacity-50 pointer-events-none" : ""}`}
                 onClick={() => handleThumbnailClick(image, index)}
               >
                 <div className="w-full h-full overflow-hidden">
