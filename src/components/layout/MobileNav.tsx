@@ -21,13 +21,13 @@ export default function MobileNav({
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.05,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -43,71 +43,50 @@ export default function MobileNav({
     <AnimatePresence>
       {isMenuOpen && (
         <motion.div
-          className="md:hidden mt-4 pb-2 overflow-hidden"
-          initial={{ height: 0, opacity: 0 }}
-          animate={{
-            height: "auto",
-            opacity: 1,
-            transition: {
-              height: {
-                duration: 0.3,
-              },
-              opacity: {
-                duration: 0.2,
-                delay: 0.1,
-              },
-            },
-          }}
-          exit={{
-            height: 0,
-            opacity: 0,
-            transition: {
-              height: {
-                duration: 0.3,
-              },
-              opacity: {
-                duration: 0.2,
-              },
-            },
+          className="fixed inset-x-0 bottom-0 h-full max-h-[90vh] bg-neutral-900 z-50 md:hidden"
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{
+            type: "easeInOut",
+            duration: 0.4,
           }}
         >
-          <motion.div
-            initial={{ y: -20 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+          <motion.nav
+            className="flex flex-col px-6 pt-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <motion.nav
-              className="absolute top-full right-0 flex flex-col space-y-4 items-end pt-4 z-50"
-              variants={containerVariants}
-              initial={"hidden"}
-              animate={"visible"}
-            >
-              {navItems.map((item) => {
-                const isActive =
-                  pathname === item.path ||
-                  (item.path !== "/" && pathname?.startsWith(item.path));
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.path ||
+                (item.path !== "/" && pathname?.startsWith(item.path));
 
-                return (
-                  <motion.div
-                    key={item.name}
-                    variants={itemVariants}
-                    className="w-full text-right"
+              return (
+                <motion.div
+                  key={item.name}
+                  variants={itemVariants}
+                  className="border-b border-neutral-500 last:border-b-0"
+                >
+                  <Link
+                    href={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`
+                        block py-4 text-3xl font-medium transition-colors duration-200
+                        ${
+                          isActive
+                            ? "font-semibold"
+                            : "text-neutral-600 hover:text-neutral-400"
+                        }
+                      `}
                   >
-                    <Link
-                      href={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`
-                inline-block py-2 text-lg font-medium transition-colors duration-200
-                ${isActive ? "font-semibold" : "text-neutral-600"}
-              `}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </motion.nav>
-          </motion.div>
+                    {item.name}
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </motion.nav>
         </motion.div>
       )}
     </AnimatePresence>

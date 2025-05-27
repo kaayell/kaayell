@@ -15,16 +15,13 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="duration-500 hover:scale-110">
-            kl
-          </Link>
-          <Navigation navItems={navItems} />
-          <MobileMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-        </div>
-
+    <header className="sticky top-0 z-50 bg-neutral-900/90">
+      <div className="flex items-center justify-between p-10 sm:px-16">
+        <Link href="/" className="duration-500 hover:scale-110">
+          kl
+        </Link>
+        <Navigation navItems={navItems} />
+        <MobileMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         <MobileNav
           navItems={navItems}
           isMenuOpen={isMenuOpen}
