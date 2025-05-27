@@ -43,7 +43,7 @@ export default function MobileNav({
     <AnimatePresence>
       {isMenuOpen && (
         <motion.div
-          className="fixed inset-x-0 bottom-0 h-full max-h-[90vh] bg-neutral-900 z-50 md:hidden"
+          className="fixed inset-x-0 top-0 bottom-0 bg-neutral-900 z-40 md:hidden mt-24"
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}

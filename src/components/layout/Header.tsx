@@ -15,7 +15,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-neutral-900/90">
+    <header className="sticky top-0 z-50 bg-neutral-900">
       <div className="flex items-center justify-between p-10 sm:px-16">
         <Link href="/" className="duration-500 hover:scale-110">
           kl
