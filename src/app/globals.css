@@ -22,30 +22,20 @@
     header {
         @apply bg-neutral-300/80 dark:bg-neutral-900/80
     }
-
-    h1 {
-        @apply text-4xl md:text-5xl font-bold;
-    }
-
-    h2 {
-        @apply text-3xl md:text-4xl font-bold;
-    }
-
-    h3 {
-        @apply text-2xl md:text-3xl font-semibold;
-    }
-
-    p {
-        @apply leading-relaxed;
-    }
 }
 
 @layer components {
     .grid-masonry-gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        grid-auto-rows: 200px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         grid-auto-flow: dense;
         gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+        .grid-masonry-gallery {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 150px;
+        }
     }
 }

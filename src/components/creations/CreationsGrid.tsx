@@ -13,7 +13,6 @@ interface CreationGalleryProps {
 export default function CreationsGrid({ creations }: CreationGalleryProps) {
   const router = useRouter();
 
-  // Calculate row spans based on image aspect ratios
   const imagesWithSpans = useMemo(() => {
     return creations.map((image) => {
       const aspectRatio = image.aspect_ratio;
@@ -38,16 +37,8 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
     });
   }, [creations]);
 
-  if (creations.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-lg text-neutral-500">No artworks found.</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="grid-masonry-gallery">
+    <div className="grid-masonry-gallery mx-auto px-4 sm:px-6 lg:px-8">
       {imagesWithSpans.map((image) => {
         return (
           <div
