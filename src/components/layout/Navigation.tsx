@@ -49,7 +49,7 @@ export default function Navigation({ navItems }: NavigationProps) {
                 ${
                   isActive
                     ? "font-semibold"
-                    : "text-neutral-600 hover:text-neutral-400"
+                    : "text-neutral-400 hover:text-neutral-300"
                 }
               `}
               >

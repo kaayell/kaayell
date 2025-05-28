@@ -7,7 +7,7 @@ export default function Footer() {
             href="https://instagram.com/kaayell"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-600 hover:text-neutral-400 transition-colors"
+            className="text-neutral-500 hover:text-neutral-300 transition-colors"
           >
             <span className="sr-only">Instagram</span>
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

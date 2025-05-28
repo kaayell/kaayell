@@ -67,7 +67,7 @@ export default function MobileNav({
                 <motion.div
                   key={item.name}
                   variants={itemVariants}
-                  className="border-b border-neutral-500 last:border-b-0"
+                  className="border-b border-neutral-400 last:border-b-0"
                 >
                   <Link
                     href={item.path}
@@ -77,7 +77,7 @@ export default function MobileNav({
                         ${
                           isActive
                             ? "font-semibold"
-                            : "text-neutral-600 hover:text-neutral-400"
+                            : "text-neutral-500 hover:text-neutral-300"
                         }
                       `}
                   >
