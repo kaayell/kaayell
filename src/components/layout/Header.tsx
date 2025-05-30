@@ -16,8 +16,8 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-neutral-900">
-      <div className="flex items-center justify-between p-10 sm:px-16">
-        <Link href="/" className="duration-500 hover:scale-110">
+      <div className="flex items-center justify-between py-8 px-16">
+        <Link href="/" className="duration-500 hover:tracking-widest">
           kl
         </Link>
         <Navigation navItems={navItems} />

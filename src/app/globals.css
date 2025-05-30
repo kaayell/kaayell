@@ -2,8 +2,8 @@
 
 @theme {
     --color-neutral-300: oklch(0.9262 0.0063 75.4);
-    --color-neutral-400: oklch(0.8075 0.0288 109.25);
-    --color-neutral-500: oklch(0.733 0.0199 21.67);
+    --color-neutral-400: oklch(0.8953 0.019 75.31);
+    --color-neutral-500: oklch(0.6821 0.029 34.99);
     --color-neutral-600: oklch(0.4666 0.0329 132.17);
     --color-neutral-900: oklch(0.3226 0.0133 131.63);
 }
@@ -27,10 +27,5 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 24px;
         }
-    }
-
-    .grid-image {
-        border: 4px solid black;
-        padding: 1px;
     }
 }
