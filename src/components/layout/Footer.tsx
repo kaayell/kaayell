@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bottom-0">
+    <footer className="fixed bottom-0">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex space-x-4">
           <a

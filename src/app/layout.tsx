@@ -16,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.className} ${geistMono.className} min-h-screen flex flex-col`}
-      >
+      <body className={`${geistSans.className} ${geistMono.className}`}>
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
