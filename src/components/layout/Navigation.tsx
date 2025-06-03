@@ -1,80 +1,96 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 type NavigationProps = {
-  navItems: { name: string; path: string }[];
+  isMenuOpen: boolean;
+  setIsMenuOpen: (isOpen: boolean) => void;
 };
 
-export default function Navigation({ navItems }: NavigationProps) {
+export default function Navigation({
+  isMenuOpen,
+  setIsMenuOpen,
+}: NavigationProps) {
   const pathname = usePathname();
+  const navItems = [
+    { name: "creations", path: "/creations" },
+    { name: "experience", path: "/experience" },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 24,
+      },
+    },
+  };
 
   return (
-    <div className="hidden md:block">
-      <motion.nav className="flex space-x-8">
-        {navItems.map((item) => {
-          const isActive =
-            pathname === item.path ||
-            (item.path !== "/" && pathname?.startsWith(item.path));
+    <AnimatePresence>
+      {isMenuOpen && (
+        <motion.div
+          className="fixed inset-x-0 top-0 bottom-0 bg-neutral-900 z-40 mt-24"
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{
+            type: "easeInOut",
+            duration: 0.4,
+          }}
+        >
+          <motion.nav
+            className="flex flex-col px-6 pt-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.path ||
+                (item.path !== "/" && pathname?.startsWith(item.path));
 
-          return (
-            <motion.div
-              key={item.name}
-              initial="initial"
-              whileHover="hover"
-              className="relative flex flex-col items-center"
-            >
-              {/* Top rainbow line */}
-              <motion.div
-                className="absolute top-0 h-px w-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500"
-                variants={{
-                  initial: { scaleX: 0, opacity: 0, originX: 0 },
-                  hover: {
-                    scaleX: 1,
-                    opacity: 1,
-                    transition: {
-                      type: "easeInOut",
-                      delay: 0.1,
-                    },
-                  },
-                }}
-              />
-
-              <Link
-                href={item.path}
-                className={`
-                text-base font-medium py-1
-                ${
-                  isActive
-                    ? "font-semibold"
-                    : "text-neutral-400 hover:text-neutral-300"
-                }
-              `}
-              >
-                {item.name}
-              </Link>
-
-              {/* Bottom rainbow line */}
-              <motion.div
-                className="absolute bottom-0 h-px w-full bg-gradient-to-r to-blue-500  via-pink-500  from-purple-500"
-                variants={{
-                  initial: { scaleX: 0, opacity: 0, originX: 1 },
-                  hover: {
-                    scaleX: 1,
-                    opacity: 1,
-                    transition: {
-                      type: "easeInOut",
-                      delay: 0.1,
-                    },
-                  },
-                }}
-              />
-            </motion.div>
-          );
-        })}
-      </motion.nav>
-    </div>
+              return (
+                <motion.div
+                  key={item.name}
+                  variants={itemVariants}
+                  className="border-b border-neutral-400 last:border-b-0"
+                >
+                  <Link
+                    href={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`
+                        block py-4 text-3xl font-medium transition-colors duration-200
+                        ${
+                          isActive
+                            ? "font-semibold"
+                            : "text-neutral-500 hover:text-neutral-300"
+                        }
+                      `}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </motion.nav>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
