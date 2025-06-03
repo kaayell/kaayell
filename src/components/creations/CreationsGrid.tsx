@@ -1,10 +1,10 @@
 "use client";
 
 import { CloudinaryImage } from "@/lib/cloudinary";
+import { motion } from "motion/react";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 
 interface CreationGalleryProps {
   creations: CloudinaryImage[];
@@ -15,19 +15,11 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll progress of the container
-  const { scrollXProgress } = useScroll({
-    container: containerRef,
-  });
-
-  const x = useTransform(scrollXProgress, [0, 1], [0, -100]);
-
   const creationsWithSpans = useMemo(() => {
     return creations.map((image) => {
       const aspectRatio = image.width / image.height;
 
-      let gridSpan = [1, 1]; // default span
-
+      let gridSpan = [1, 1];
       if (aspectRatio > 1.5) {
         gridSpan = [1, 2]; // wide images
       } else if (aspectRatio < 0.7) {
@@ -38,7 +30,6 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
         ...image,
         colSpan: gridSpan[1],
         rowSpan: gridSpan[0],
-        aspectRatio,
       };
     });
   }, [creations]);
@@ -46,28 +37,28 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
   return (
     <div
       ref={containerRef}
-      className="px-8 will-change-transform h-[calc(100vh-100px)] overflow-x-auto overflow-y-hidden"
+      className="px-8 h-[calc(100vh-100px)] overflow-x-auto overflow-y-hidden scroll-smooth"
     >
-      <motion.div
-        className="grid-gallery"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="grid-gallery">
         {creationsWithSpans.map((image, index) => {
           return (
             <motion.div
               key={image.public_id}
-              className="drop-shadow-xl hover:grayscale hover:scale-105 transition-all duration-700 ease-in-out cursor-pointer"
+              className="drop-shadow-xl cursor-pointer"
               style={{
                 gridColumn: `span ${image.colSpan}`,
                 gridRow: `span ${image.rowSpan}`,
-                x,
               }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{
-                duration: 0.6,
+                duration: 0.4,
                 delay: index * 0.1,
-                ease: "easeOut",
+                ease: "easeIn",
+              }}
+              whileHover={{
+                scale: 1.1,
+                transition: { duration: 0.3, ease: "easeIn" },
               }}
               onClick={() => router.push(`/creations/${image.public_id}`)}
             >
@@ -81,7 +72,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
             </motion.div>
           );
         })}
-      </motion.div>
+      </div>
     </div>
   );
 }
