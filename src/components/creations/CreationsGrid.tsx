@@ -34,16 +34,28 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
     });
   }, [creations]);
 
+  const handleImageClick = (image: CloudinaryImage) => {
+    // Add a small delay to allow the exit animation to start
+    setTimeout(() => {
+      router.push(`/creations/${image.public_id}`);
+    }, 150);
+  };
+
   return (
-    <div
+    <motion.div
       ref={containerRef}
       className="px-8 h-[calc(100vh-100px)] overflow-x-auto overflow-y-hidden scroll-smooth"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
     >
       <div className="grid-gallery">
         {creationsWithSpans.map((image, index) => {
           return (
             <motion.div
               key={image.public_id}
+              layoutId={`image-${image.public_id}`}
               className="drop-shadow-xl cursor-pointer"
               style={{
                 gridColumn: `span ${image.colSpan}`,
@@ -51,6 +63,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               transition={{
                 duration: 0.4,
                 delay: index * 0.1,
@@ -60,7 +73,8 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
                 scale: 1.1,
                 transition: { duration: 0.3, ease: "easeIn" },
               }}
-              onClick={() => router.push(`/creations/${image.public_id}`)}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleImageClick(image)}
             >
               <CldImage
                 src={image.public_id}
@@ -73,6 +87,6 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
