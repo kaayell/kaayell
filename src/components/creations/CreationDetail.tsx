@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
 import Loading from "@/components/ui/Loading";
@@ -17,11 +17,13 @@ export default function CreationDetailPage({
   const [selectedImage, setSelectedImage] = useState<CloudinaryImage>(creation);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
   const router = useRouter();
 
   const handleThumbnailClick = (image: CloudinaryImage, index: number) => {
     if (selectedImageIndex !== index) {
       setIsLoading(true);
+      setIsImageLoaded(false);
       setSelectedImage(image);
       setSelectedImageIndex(index);
     }
@@ -29,6 +31,7 @@ export default function CreationDetailPage({
 
   const handleImageLoad = () => {
     setIsLoading(false);
+    setIsImageLoaded(true);
   };
 
   const handleBackClick = () => {
@@ -39,160 +42,259 @@ export default function CreationDetailPage({
     ? [...[creation], ...creation.related_assets]
     : [creation];
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft" && selectedImageIndex > 0) {
+        handleThumbnailClick(
+          relatedAssets[selectedImageIndex - 1],
+          selectedImageIndex - 1,
+        );
+      } else if (
+        e.key === "ArrowRight" &&
+        selectedImageIndex < relatedAssets.length - 1
+      ) {
+        handleThumbnailClick(
+          relatedAssets[selectedImageIndex + 1],
+          selectedImageIndex + 1,
+        );
+      } else if (e.key === "Escape") {
+        handleBackClick();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [selectedImageIndex, relatedAssets]);
+
   return (
-    <div className="w-full h-screen flex flex-row justify-center px-4">
-      <div className="flex flex-col gap-2 items-center md:items-start">
-        <motion.button
-          onClick={handleBackClick}
-          className="flex items-center gap-2 text-neutral-300 hover:text-neutral-100 cursor-pointer transition-colors group"
-          whileHover={{ x: -4 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <svg
-            className="w-5 h-5 transition-transform group-hover:-translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+      className="h-screen bg-neutral-900 flex flex-col"
+    >
+      {/* heading */}
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+        className="flex-shrink-0 pt-24 pb-6 px-8 md:px-16 lg:px-24"
+      >
+        <div className="flex items-center justify-between">
+          <motion.button
+            onClick={handleBackClick}
+            className="inline-flex items-center text-neutral-500 hover:text-neutral-100 transition-colors duration-300"
+            whileHover={{ x: -3 }}
+            transition={{ duration: 0.2 }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span className="text-sm font-medium">Back to Gallery</span>
-        </motion.button>
-        <div className="mb-4">
-          <motion.h2
-            className="text-3xl md:text-4xl font-light mb-2"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
+            <span className="text-lg mr-2">←</span>
+            <span className="text-sm">Back</span>
+          </motion.button>
+
+          <h1 className="text-right text-xl md:text-2xl font-light text-neutral-100">
             {creation.display_name}
-          </motion.h2>
-          <div className="w-24 h-0.5 bg-gradient-to-r from-neutral-400 to-transparent"></div>
+          </h1>
         </div>
+      </motion.div>
 
-        <div
-          className="flex flex-col gap-4 md:flex-row w-full max-w-7xl h-screen max-h-[90vh]"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Left Side */}
+      {/* main content */}
+      <div className="flex-1 min-h-0 px-8 md:px-16 lg:px-24">
+        <div className="h-full flex flex-col md:flex-row gap-6">
           <motion.div
-            className="w-full h-[50vh] md:h-screen flex items-center justify-center relative"
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
+            className="flex-1 min-h-0"
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: 0.2,
+              duration: 0.8,
+              ease: [0.25, 0.4, 0.25, 1],
+            }}
           >
-            <div className="w-full h-full flex items-center justify-center">
-              <motion.div
-                className="relative w-full h-full max-w-3xl max-h-[90vh] overflow-hidden"
-                layoutId={
-                  selectedImageIndex === 0
-                    ? `image-${selectedImage.public_id}`
-                    : undefined
-                }
-              >
-                {/* Loading Indicator */}
-                {isLoading && <Loading />}
+            <div className="relative w-full h-full bg-neutral-800/20 border border-neutral-700/30 overflow-hidden">
+              {isLoading && <Loading />}
 
-                <CldImage
-                  src={selectedImage.public_id}
-                  width={creation.width}
-                  height={creation.height}
-                  alt={creation.display_name}
-                  className={`w-full h-full object-contain transition-opacity duration-300 ${
-                    isLoading ? "opacity-0" : "opacity-100"
-                  }`}
-                  onLoad={handleImageLoad}
-                />
+              {/* showcase image */}
+              <motion.div
+                className="relative w-full h-full"
+                layoutId={`image-${selectedImage.public_id}`}
+                key={selectedImage.public_id}
+              >
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{
+                    scale: isImageLoaded ? 1 : 0.95,
+                    opacity: isImageLoaded ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.25, 0.4, 0.25, 1],
+                  }}
+                  className="w-full h-full p-6 md:p-8 lg:p-12"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.1}
+                  onDragEnd={(event, info) => {
+                    const threshold = 50;
+                    if (info.offset.x > threshold && selectedImageIndex > 0) {
+                      // Swipe right - go to previous image
+                      handleThumbnailClick(
+                        relatedAssets[selectedImageIndex - 1],
+                        selectedImageIndex - 1,
+                      );
+                    } else if (
+                      info.offset.x < -threshold &&
+                      selectedImageIndex < relatedAssets.length - 1
+                    ) {
+                      // Swipe left - go to next image
+                      handleThumbnailClick(
+                        relatedAssets[selectedImageIndex + 1],
+                        selectedImageIndex + 1,
+                      );
+                    }
+                  }}
+                  style={{ x: 0 }} // Reset position after drag
+                  whileDrag={{ scale: 0.98 }}
+                >
+                  <CldImage
+                    src={selectedImage.public_id}
+                    width={creation.width}
+                    height={creation.height}
+                    alt={creation.display_name}
+                    className="w-full h-full object-contain pointer-events-none md:pointer-events-auto"
+                    onLoad={handleImageLoad}
+                    priority
+                  />
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* Right Side */}
-          <motion.div
-            className="w-full h-full max-w-lg max-h-[90vh] md:h-screen overflow-y-auto mx-auto"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            {/* Mobile */}
+          {/* desktop sidebar */}
+          {relatedAssets.length > 1 && (
             <motion.div
-              className="md:hidden w-full overflow-x-auto"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
+              className="hidden md:flex flex-col w-32 lg:w-40 min-h-0"
+              initial={{ x: 30, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                delay: 0.4,
+                duration: 0.8,
+                ease: [0.25, 0.4, 0.25, 1],
+              }}
             >
-              <div className="flex space-x-4 min-w-max">
+              <div className="flex-1 min-h-0 overflow-y-auto space-y-3">
                 {relatedAssets.map((image, index) => (
                   <motion.div
                     key={index}
-                    className={`flex-shrink-0 w-40 h-40 rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${
+                    className={`relative aspect-square cursor-pointer overflow-hidden border-2 transition-all duration-300 ${
                       selectedImageIndex === index
-                        ? "ring-2 ring-primary-500 scale-[0.96]"
-                        : "hover:opacity-90"
-                    } ${isLoading && selectedImageIndex === index ? "opacity-50 pointer-events-none" : ""}`}
+                        ? "border-neutral-100 bg-neutral-800/50"
+                        : "border-neutral-600/50 bg-neutral-800/20 hover:border-neutral-500"
+                    }`}
                     onClick={() => handleThumbnailClick(image, index)}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    transition={{
+                      delay: 0.6 + index * 0.05,
+                      duration: 0.4,
+                      ease: [0.25, 0.4, 0.25, 1],
+                    }}
+                    whileHover={{
+                      scale: selectedImageIndex === index ? 0.95 : 1.05,
+                      transition: { duration: 0.2 },
+                    }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <div className="w-full h-full overflow-hidden">
+                    <div className="w-full h-full p-2">
                       <CldImage
                         src={image.public_id}
-                        width={160}
-                        height={160}
+                        width={150}
+                        height={150}
                         alt={`${creation.display_name} - View ${index + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-contain"
                       />
+                    </div>
+
+                    {/* Selected indicator */}
+                    {selectedImageIndex === index && (
+                      <motion.div
+                        className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full"
+                        layoutId="selectedIndicatorDesktop"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+
+                    {/* Index number */}
+                    <div className="absolute bottom-1 left-1 text-xs font-mono text-neutral-400">
+                      {(index + 1).toString().padStart(2, "0")}
                     </div>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
-
-            {/* Desktop */}
-            <motion.div
-              className="hidden md:grid grid-cols-2 gap-4"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              {relatedAssets.map((image, index) => (
-                <motion.div
-                  key={index}
-                  className={`aspect-square rounded-md overflow-hidden cursor-pointer transition-all duration-300 ${
-                    selectedImageIndex === index
-                      ? "ring-2 ring-primary-500 scale-[0.96]"
-                      : "hover:opacity-90"
-                  } ${isLoading && selectedImageIndex === index ? "opacity-50 pointer-events-none" : ""}`}
-                  onClick={() => handleThumbnailClick(image, index)}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="w-full h-full overflow-hidden">
-                    <CldImage
-                      src={image.public_id}
-                      width={"500"}
-                      height={"700"}
-                      alt={`${creation.display_name} - View ${index + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
+          )}
         </div>
       </div>
-    </div>
+
+      {/* mobile thumbnails */}
+      {relatedAssets.length > 1 && (
+        <motion.div
+          className="flex-shrink-0 p-4 px-8 md:hidden"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+        >
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            {relatedAssets.map((image, index) => (
+              <motion.div
+                key={index}
+                className={`relative flex-shrink-0 w-16 h-16 cursor-pointer overflow-hidden border-2 transition-all duration-300 ${
+                  selectedImageIndex === index
+                    ? "border-neutral-100 bg-neutral-800/50"
+                    : "border-neutral-600/50 bg-neutral-800/20 hover:border-neutral-500"
+                }`}
+                onClick={() => handleThumbnailClick(image, index)}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  delay: 0.6 + index * 0.05,
+                  duration: 0.4,
+                  ease: [0.25, 0.4, 0.25, 1],
+                }}
+                whileHover={{
+                  scale: selectedImageIndex === index ? 0.95 : 1.1,
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <div className="w-full h-full p-1.5">
+                  <CldImage
+                    src={image.public_id}
+                    width={100}
+                    height={100}
+                    alt={`${creation.display_name} - View ${index + 1}`}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Selected indicator */}
+                {selectedImageIndex === index && (
+                  <motion.div
+                    className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full"
+                    layoutId="selectedIndicatorMobile"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
   );
 }
