@@ -6,6 +6,11 @@ import { geistMono, geistSans } from "@/lib/fonts";
 export const metadata: Metadata = {
   title: "kaayell",
   description: "kaayell",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
