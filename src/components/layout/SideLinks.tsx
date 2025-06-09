@@ -38,7 +38,7 @@ export default function SideLinks() {
 
         {/* Vertical line */}
         <motion.div
-          className="w-0.5 h-16 bg-neutral-600"
+          className="w-0.5 h-16 bg-neutral-500"
           initial={{ height: 0 }}
           animate={{ height: 64 }}
           transition={{ duration: 0.8, delay: 1.5, ease: [0.25, 0.4, 0.25, 1] }}

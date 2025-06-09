@@ -76,7 +76,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
                   onHoverStart={() => setHoveredIndex(index)}
                   onHoverEnd={() => setHoveredIndex(null)}
                 >
-                  <div className="relative w-full h-full bg-neutral-800/30 border border-neutral-700/50 overflow-hidden">
+                  <div className="relative w-full h-full bg-neutral-800/30 overflow-hidden">
                     <motion.div
                       className="w-full h-full"
                       whileHover={{ scale: 1.05 }}
@@ -140,7 +140,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
                     </motion.div>
 
                     <motion.div
-                      className="absolute top-4 right-4 text-xs font-mono text-neutral-500"
+                      className="absolute top-4 right-4 text-xs text-neutral-500"
                       initial={{ opacity: 0.3 }}
                       animate={{ opacity: hoveredIndex === index ? 1 : 0.3 }}
                       transition={{ duration: 0.3 }}
