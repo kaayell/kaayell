@@ -9,7 +9,7 @@ export default function SideLinks() {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8, delay: 1, ease: [0.25, 0.4, 0.25, 1] }}
-      className="fixed left-6 md:left-8 top-1/2 transform -translate-y-1/2 z-40 hidden md:block"
+      className="fixed left-4 md:left-6 lg:left-8 xl:left-10 top-1/2 transform -translate-y-1/2 z-40 hidden md:block"
     >
       <div className="flex flex-col items-center space-y-6">
         <div className="flex flex-col space-y-4">
