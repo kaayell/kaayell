@@ -2,15 +2,12 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
+import { scaleOnHover } from "@/lib/animations";
 
 export default function Logo() {
   return (
     <Link href="/">
-      <motion.div
-        className="cursor-pointer"
-        whileHover={{ scale: 1.1 }}
-        transition={{ duration: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
-      >
+      <motion.div className="cursor-pointer" {...scaleOnHover}>
         <svg viewBox="0 0 100 100" width={100} height={100}>
           <path
             fill="currentColor"

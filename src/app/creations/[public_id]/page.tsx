@@ -11,7 +11,7 @@ export default async function Page(props: {
 
   return (
     <Suspense fallback={<Loading />}>
-      <CreationDetailPage creation={creation} />;
+      <CreationDetailPage creation={creation} />
     </Suspense>
   );
 }

@@ -3,34 +3,30 @@
 import { motion } from "motion/react";
 import { courierPrime, fredericka, lavishlyYours } from "@/lib/fonts";
 import Link from "next/link";
+import {
+  fadeInUp,
+  createDelayedAnimation,
+  slideOnHover,
+} from "@/lib/animations";
 
 export default function HeroSection() {
   return (
     <div className="h-screen flex flex-col justify-center">
-      <div className="px-8 md:px-16 lg:px-24">
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className="mb-8"
-        >
+      <div className="px-8 md:px-18 lg:px-26">
+        <div className="mb-8">
           <motion.h1
             className={`text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight ${courierPrime.className}`}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            {...createDelayedAnimation(0.2, fadeInUp)}
           >
             <span className="text-neutral-100">kaay</span>
             <span className="text-neutral-500">•</span>
             <span className="text-neutral-100">ell</span>
           </motion.h1>
-        </motion.div>
+        </div>
 
         <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
           className="mb-12 flex flex-col md:flex-row md:items-baseline md:space-x-8"
+          {...createDelayedAnimation(0.4, fadeInUp)}
         >
           <h2
             className={`text-3xl md:text-4xl text-neutral-300 ${fredericka.className}`}
@@ -44,16 +40,11 @@ export default function HeroSection() {
           </h3>
         </motion.div>
 
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-        >
+        <motion.div {...createDelayedAnimation(0.8, fadeInUp)}>
           <Link href="/creations">
             <motion.div
               className="inline-flex items-center group cursor-pointer"
-              whileHover={{ x: 8 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+              {...slideOnHover}
             >
               <span className="text-lg font-medium text-neutral-100 mr-4 group-hover:text-white transition-colors">
                 View Creations
