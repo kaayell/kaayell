@@ -11,6 +11,8 @@ export const socialLinks = [
         />
       </svg>
     ),
+    target: "_blank",
+    rel: "noopener noreferrer",
   },
   {
     name: "GitHub",
@@ -24,6 +26,8 @@ export const socialLinks = [
         />
       </svg>
     ),
+    target: "_blank",
+    rel: "noopener noreferrer",
   },
   {
     name: "LinkedIn",
@@ -37,6 +41,8 @@ export const socialLinks = [
         />
       </svg>
     ),
+    target: "_blank",
+    rel: "noopener noreferrer",
   },
   {
     name: "Email",

@@ -23,10 +23,8 @@ export default function SideLinks() {
             <motion.a
               key={link.name}
               href={link.url}
-              target={link.url.startsWith("http") ? "_blank" : undefined}
-              rel={
-                link.url.startsWith("http") ? "noopener noreferrer" : undefined
-              }
+              target={link.target}
+              rel={link.rel}
               className="text-neutral-500 hover:text-neutral-100 transition-colors duration-300"
               variants={createStaggerItem(fadeInUp)}
             >
