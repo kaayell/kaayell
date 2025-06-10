@@ -54,7 +54,7 @@ export default function CreationsGrid({ creations }: CreationGalleryProps) {
             {...createDelayedAnimation(0.2, fadeIn)}
           >
             <motion.div
-              className="gallery-track h-full w-full min-w-full max-h-full overflow-y-hidden"
+              className="gallery-track h-full w-full min-w-full max-h-full overflow-y-hidden scrollbar-hide"
               variants={staggerContainer}
               initial={"initial"}
               animate={"animate"}

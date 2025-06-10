@@ -152,7 +152,7 @@ export default function CreationDetailPage({
           {relatedAssets.length > 1 && (
             <div className="hidden md:flex flex-col w-32 lg:w-40 min-h-0">
               <motion.div
-                className="flex-1 min-h-0 overflow-y-auto space-y-3"
+                className="flex-1 min-h-0 overflow-y-auto scrollbar-hide space-y-3"
                 variants={staggerContainer}
                 initial={"initial"}
                 animate={"animate"}
