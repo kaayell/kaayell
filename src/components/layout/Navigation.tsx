@@ -8,6 +8,7 @@ import {
   horizontalLine,
   scaleOnHover,
   slideInFromBottom,
+  springInFromBottom,
   staggerContainer,
 } from "@/lib/animations";
 
@@ -32,7 +33,7 @@ export default function Navigation({
       {isMenuOpen && (
         <motion.div
           className="fixed inset-0 bg-neutral-900 z-40"
-          {...slideInFromBottom}
+          {...springInFromBottom}
         >
           <div className="flex flex-col justify-center items-center h-full px-8">
             <nav className="text-center">

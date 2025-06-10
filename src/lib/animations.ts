@@ -2,15 +2,11 @@
 
 import { Variants } from "motion/react";
 
-// Common easing function
 export const ease = [0.25, 0.4, 0.25, 1] as const;
-
-// Page transitions
-export const pageTransition = {
-  initial: { y: 20, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  exit: { y: 20, opacity: 0 },
-  transition: { ease, duration: 0.5 },
+export const spring = {
+  type: "spring" as const,
+  stiffness: 400,
+  damping: 30,
 };
 
 export const fadeInUp = {
@@ -53,6 +49,18 @@ export const slideInFromBottom = {
   animate: { y: 0, opacity: 1 },
   exit: { y: 100, opacity: 0 },
   transition: { duration: 0.8, ease },
+};
+
+export const springInFromBottom = {
+  initial: { y: "100%" },
+  animate: {
+    y: 0,
+    transition: { spring, duration: 0.4 },
+  },
+  exit: {
+    y: "100%",
+    transition: { spring, duration: 0.4 },
+  },
 };
 
 // Hover animations
