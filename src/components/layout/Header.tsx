@@ -13,14 +13,16 @@ export default function Header() {
   return (
     <>
       <header className="fixed h-24 top-0 left-0 right-0 z-50 bg-neutral-900/90">
-        <div className="flex items-center justify-between px-8">
-          <motion.div {...createDelayedAnimation(0.3, slideInFromTop)}>
-            <Logo />
-          </motion.div>
+        <div className="px-6 md:px-16 lg:px-24">
+          <div className="flex items-center justify-between">
+            <motion.div {...createDelayedAnimation(0.3, slideInFromTop)}>
+              <Logo />
+            </motion.div>
 
-          <motion.div {...createDelayedAnimation(0.3, slideInFromTop)}>
-            <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-          </motion.div>
+            <motion.div {...createDelayedAnimation(0.3, slideInFromTop)}>
+              <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+            </motion.div>
+          </div>
         </div>
       </header>
 
