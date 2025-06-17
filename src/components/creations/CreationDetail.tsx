@@ -99,7 +99,7 @@ export default function CreationDetailPage({
       </div>
 
       {/* main content */}
-      <div className="flex-1 min-h-0 px-8 md:px-16 lg:px-24">
+      <div className="flex-1 min-h-0 px-8 md:px-18 lg:px-26 mb-8">
         <div className="h-full flex flex-col md:flex-row gap-6">
           <motion.div className="flex-1 min-h-0" {...slideInFromBottom}>
             <div className="relative w-full h-full bg-neutral-800/20 border border-neutral-700/30 overflow-hidden">

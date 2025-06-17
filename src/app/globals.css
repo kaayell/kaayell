@@ -25,7 +25,7 @@
     .grid-gallery {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: .5rem;
+        gap: 1rem;
     }
 
     @media (min-width: 640px) {
@@ -33,6 +33,10 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         }
+    }
+
+    .grid-gallery:hover .gallery-item:not(:hover) {
+        filter: grayscale(.75);
     }
 }
 
