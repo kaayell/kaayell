@@ -74,7 +74,7 @@ export default function CreationDetailPage({
   }, [selectedImageIndex, relatedAssets]);
 
   return (
-    <div className="h-screen bg-neutral-900 flex flex-col">
+    <div className="h-screen flex flex-col">
       {/* heading */}
       <div className="flex-shrink-0 pt-24 pb-6 px-8 md:px-16 lg:px-24">
         <div className="flex items-center justify-between">
