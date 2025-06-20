@@ -37,7 +37,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
 
   return (
     <div className="h-full pt-24 px-8 md:px-18 lg:px-26">
-      <div className="relative w-full h-full rounded-2xl pegboard bg-amber-100 bg-[url(/pegboard.jpg)] bg-blend-multiply">
+      <div className="relative w-full h-full rounded-2xl pegboard">
         <div className="screw top-5 left-5" />
         <div className="screw top-5 right-5" />
         <div className="screw bottom-5 left-5" />
