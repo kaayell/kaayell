@@ -61,6 +61,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
               variants={createStaggerItem(fadeInUp)}
               onClick={() => router.push(`/creations/${image.public_id}`)}
             >
+              <div className="peg-hole" />
               <div className="hanging-string" />
               <CldImage
                 key={index}
