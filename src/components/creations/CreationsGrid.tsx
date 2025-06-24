@@ -2,7 +2,7 @@
 
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { motion } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   createStaggerItem,
   fadeInUp,
@@ -17,24 +17,6 @@ interface CreationsGridProps {
 
 export default function CreationsGrid({ creations }: CreationsGridProps) {
   const router = useRouter();
-  const [gridSize, setGridSize] = useState({ cols: 0, rows: 0 });
-  const SPACING = 100;
-
-  useEffect(() => {
-    const updateSize = () => {
-      const container = document.getElementById("holes-grid");
-      if (container) {
-        const rect = container.getBoundingClientRect();
-        setGridSize({
-          cols: Math.floor(rect.width / SPACING),
-          rows: Math.floor(rect.height / SPACING),
-        });
-      }
-    };
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
 
   const creationsWithSpans = useMemo(() => {
     return creations.map((image) => {
@@ -53,18 +35,6 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
     });
   }, [creations]);
 
-  const { pegHoles } = useMemo(() => {
-    if (gridSize.cols === 0 || gridSize.rows === 0) {
-      return { pegHoles: [] };
-    }
-    const holeCount = gridSize.cols * gridSize.rows;
-    const allPegHoles = [];
-    for (let i = 0; i < holeCount; i++) {
-      allPegHoles.push({ id: `peg-${i}` });
-    }
-    return { pegHoles: [...allPegHoles] };
-  }, [gridSize]);
-
   return (
     <div className="h-full pt-24 px-8 md:px-18 lg:px-26">
       <div className="relative w-full h-full rounded-2xl pegboard">
@@ -72,19 +42,6 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
         <div className="screw top-5 right-5" />
         <div className="screw bottom-5 left-5" />
         <div className="screw bottom-5 right-5" />
-
-        <div
-          id="holes-grid"
-          className="absolute inset-[32px] holes-grid"
-          style={{
-            gridTemplateColumns: `repeat(${gridSize.cols}, 1fr)`,
-            gridTemplateRows: `repeat(${gridSize.rows}, 1fr)`,
-          }}
-        >
-          {pegHoles.map((hole) => (
-            <div key={hole.id} className="peg-hole" />
-          ))}
-        </div>
 
         <motion.div
           className="grid-gallery pt-20 px-10"
@@ -96,7 +53,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
             <motion.div
               key={image.public_id}
               layoutId={`image-${image.public_id}`}
-              className="group cursor-pointer relative"
+              className="group cursor-pointer relative gallery-item"
               style={{
                 gridColumn: `span ${image.gridSpan.col}`,
                 gridRow: `span ${image.gridSpan.row}`,
@@ -104,6 +61,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
               variants={createStaggerItem(fadeInUp)}
               onClick={() => router.push(`/creations/${image.public_id}`)}
             >
+              <div className="peg-hook" />
               <div className="hanging-string" />
               <CldImage
                 key={index}
@@ -111,7 +69,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
                 alt={image.display_name}
                 width={image.width}
                 height={image.height}
-                className="w-full h-full object-contain p-4 relative z-3 creation-shadow"
+                className="w-full h-full object-contain pt-14 relative z-3 creation-shadow"
               />
             </motion.div>
           ))}
