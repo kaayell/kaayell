@@ -34,11 +34,11 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
 
   return (
     <div className="h-full pt-24 px-8 md:px-18 lg:px-26">
-      <div className="relative min-h-screen w-full p-10 rounded-2xl pegboard">
-        <div className="screw top-5 left-5" />
-        <div className="screw top-5 right-5" />
-        <div className="screw bottom-5 left-5" />
-        <div className="screw bottom-5 right-5" />
+      <div className="relative min-h-screen w-full p-5 md:p-10 rounded-2xl pegboard">
+        <div className="screw top-2 left-2 md:top-5 md:left-5" />
+        <div className="screw top-2 right-2 md:top-5 md:right-5" />
+        <div className="screw bottom-2 left-2 md:bottom-5 md:left-5" />
+        <div className="screw bottom-2 right-2 md:bottom-5 md:right-5" />
 
         <div className="relative w-full h-full">
           <div className="w-full h-full pegboard-grid">
@@ -56,29 +56,30 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
             {creationsWithSpans.map((image, index) => (
               <motion.div
                 key={image.public_id}
-                className="group cursor-pointer relative mt-10"
+                className="group cursor-pointer relative creation"
                 style={{
                   gridColumn: `span ${image.gridSpan.col}`,
                   gridRow: `span ${image.gridSpan.row}`,
                 }}
                 variants={createStaggerItem(fadeInUp)}
-                {...scaleOnHover}
                 onClick={() => router.push(`/creations/${image.public_id}`)}
               >
-                <div className="peg-hook" />
+                <div className="peg" />
                 <div className="hanging-string" />
-                <CldImage
-                  key={`${image.public_id}-${index}`}
-                  src={image.public_id}
-                  alt={image.display_name}
-                  width={image.width}
-                  height={image.height}
-                  className="w-full h-full object-contain z-10"
-                  style={{
-                    filter:
-                      "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
-                  }}
-                />
+                <motion.div className="w-full h-full" {...scaleOnHover}>
+                  <CldImage
+                    key={`${image.public_id}-${index}`}
+                    src={image.public_id}
+                    alt={image.display_name}
+                    width={image.width}
+                    height={image.height}
+                    className="w-full h-full object-contain z-10"
+                    style={{
+                      filter:
+                        "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
+                    }}
+                  />
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>
