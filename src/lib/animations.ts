@@ -137,3 +137,20 @@ export const rotate45 = (isOpen: boolean) => ({
   animate: { rotate: isOpen ? 45 : 0 },
   transition: { duration: 0.3, ease },
 });
+
+export const swingAnimation = (index: number) => {
+  return {
+    initial: { rotate: -2 },
+    animate: {
+      rotate: [-2, 2, -2],
+      transition: {
+        duration: 9,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 0.5 * index * 0.1,
+        repeatDelay: 0,
+      },
+    },
+    whileHover: { rotate: 0 },
+  };
+};

@@ -11,6 +11,7 @@ import {
   fadeInUp,
   scaleOnHover,
   staggerContainer,
+  swingAnimation,
 } from "@/lib/animations";
 
 interface CreationsGridProps {
@@ -65,22 +66,28 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
                 onClick={() => router.push(`/creations/${image.public_id}`)}
               >
                 <div className="peg" />
-                <div className="hanging-string" />
                 <div className="creation-tag">{image.display_name}</div>
 
-                <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
-                  <CldImage
-                    key={`${image.public_id}-${index}`}
-                    src={image.public_id}
-                    alt={image.display_name}
-                    width={image.width}
-                    height={image.height}
-                    className="w-full h-full object-contain z-10"
-                    style={{
-                      filter:
-                        "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
-                    }}
-                  />
+                <motion.div
+                  className="w-full h-full"
+                  {...swingAnimation(index)}
+                  style={{ transformOrigin: "center top" }}
+                >
+                  <div className="hanging-string" />
+                  <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
+                    <CldImage
+                      key={`${image.public_id}-${index}`}
+                      src={image.public_id}
+                      alt={image.display_name}
+                      width={image.width}
+                      height={image.height}
+                      className="w-full h-full object-contain z-10"
+                      style={{
+                        filter:
+                          "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
+                      }}
+                    />
+                  </motion.div>
                 </motion.div>
               </motion.div>
             ))}
