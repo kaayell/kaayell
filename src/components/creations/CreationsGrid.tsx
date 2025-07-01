@@ -66,7 +66,9 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
               >
                 <div className="peg" />
                 <div className="hanging-string" />
-                <motion.div className="w-full h-full" {...scaleOnHover}>
+                <div className="creation-tag">{image.display_name}</div>
+
+                <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
                   <CldImage
                     key={`${image.public_id}-${index}`}
                     src={image.public_id}

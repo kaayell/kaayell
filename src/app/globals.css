@@ -1,182 +1,223 @@
 @import "tailwindcss";
 
 @theme {
-    --color-neutral-100: oklch(0.95 0.005 75.4);
-    --color-neutral-300: oklch(0.9262 0.0063 75.4);
-    --color-neutral-400: oklch(0.8953 0.019 75.31);
-    --color-neutral-500: oklch(0.6821 0.029 34.99);
-    --color-neutral-600: oklch(0.4666 0.0329 132.17);
-    --color-neutral-700: oklch(0.3726 0.0233 131.63);
-    --color-neutral-800: oklch(0.2726 0.0133 131.63);
-    --color-neutral-900: oklch(0.1869 0.013 129.34);
+  --color-neutral-100: oklch(0.95 0.005 75.4);
+  --color-neutral-300: oklch(0.9262 0.0063 75.4);
+  --color-neutral-400: oklch(0.8953 0.019 75.31);
+  --color-neutral-500: oklch(0.6821 0.029 34.99);
+  --color-neutral-600: oklch(0.4666 0.0329 132.17);
+  --color-neutral-700: oklch(0.3726 0.0233 131.63);
+  --color-neutral-800: oklch(0.2726 0.0133 131.63);
+  --color-neutral-900: oklch(0.1869 0.013 129.34);
+}
+
+@font-face {
+  font-family: Impact_LabelReversed;
+  src: url("./fonts/Impact_Label_Reversed-webfont.woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @layer base {
-    html {
-        scroll-behavior: smooth;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 
-    body {
-        @apply bg-neutral-700 text-neutral-400 antialiased;
-    }
+  body {
+    @apply bg-neutral-700 text-neutral-400 antialiased;
+  }
 }
 
 @layer components {
-    .pegboard {
-        box-shadow:
-                0 12px 35px -8px rgba(0, 0, 0, 0.4),
-                0 25px 50px -12px rgba(0, 0, 0, 0.25),
-                0 6px 12px -4px rgba(0, 0, 0, 0.15);
-    }
+  .pegboard {
+    box-shadow:
+      0 12px 35px -8px rgba(0, 0, 0, 0.4),
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 6px 12px -4px rgba(0, 0, 0, 0.15);
 
-    .pegboard::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        border-radius: 18px;
-        background: #a67c52;
-        box-shadow:
-                inset 2px 2px 6px rgba(0,0,0,0.3),
-                inset -2px -2px 6px rgba(255,255,255,0.2);
-        z-index: -1;
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 18px;
+      background: #a67c52;
+      box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.2);
+      z-index: -1;
     }
+  }
 
+  .pegboard-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 100px;
+    justify-content: center;
+
+    @apply lg:grid-cols-9;
+  }
+
+  .pegboard-hole {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect x='0' y='0' width='100%' height='100%' fill-opacity='0'/><ellipse cx='50%' cy='52%' rx='12%' ry='12%' fill='%23c2a283'/><ellipse cx='50%' cy='50%' rx='12%' ry='12%' fill='%23111'/></svg>");
+    background-position: center;
+    z-index: -1;
+  }
+
+  .screw {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background: #4d4c4c;
+    border-radius: 50%;
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.5),
+      inset 0 2px 4px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 4;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10%;
+      height: 55%;
+      background: #222;
+      border-radius: 1px;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        inset 0 2px 3px rgba(0, 0, 0, 0.8),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+        0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .peg {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(
+      135deg,
+      #d2b48c 0%,
+      #cd853f 25%,
+      #a0522d 50%,
+      #8b4513 75%,
+      #654321 100%
+    );
+    border-radius: 50%;
+    box-shadow:
+      inset 2px 2px 4px rgba(255, 255, 255, 0.4),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.4),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 4;
+  }
+
+  .creation {
+    margin-top: calc(var(--spacing) * 10);
+  }
+
+  .hanging-string {
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    width: 3px;
+    height: 45%;
+    background: linear-gradient(
+      90deg,
+      #e6d7c3 0%,
+      #f5f5dc 15%,
+      #e6d7c3 30%,
+      #f5f5dc 45%,
+      #e6d7c3 60%,
+      #f5f5dc 75%,
+      #e6d7c3 90%,
+      #f5f5dc 100%
+    );
+    transform: translateX(-50%);
+    border-radius: 2px;
+    box-shadow:
+      inset 1px 0 1px rgba(255, 255, 255, 0.8),
+      inset -1px 0 1px rgba(0, 0, 0, 0.2),
+      2px 2px 6px rgba(0, 0, 0, 0.3);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.1) 3px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+      border-radius: 2px;
+    }
+  }
+
+  .creation-tag {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #000000;
+    color: #d7d5d5;
+    padding: 4px 8px;
+
+    /* Typography to match embossed labels */
+    font-family: Impact_LabelReversed, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: -0.1em;
+
+    border-radius: 1px;
+    border: 1px solid #222;
+
+    /* 3D label effect */
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+
+    z-index: 0;
+  }
+
+  @media only screen and (max-width: 600px) {
     .pegboard-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 100px;
-        justify-content: center;
-
-        @apply lg:grid-cols-9;
+      grid-auto-rows: 50px;
     }
-
-
     .pegboard-hole {
-        position: relative;
-        width: 100%;
-        height: 100px;
-        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect x='0' y='0' width='100%' height='100%' fill-opacity='0'/><ellipse cx='50%' cy='52%' rx='12%' ry='12%' fill='%23c2a283'/><ellipse cx='50%' cy='50%' rx='12%' ry='12%' fill='%23111'/></svg>");
-        background-position: center;
-        z-index: -1;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><rect x='0' y='0' width='100%' height='100%' fill-opacity='0'/><ellipse cx='50%' cy='52%' rx='12%' ry='12%' fill='%23c2a283'/><ellipse cx='50%' cy='50%' rx='12%' ry='12%' fill='%23111'/></svg>");
+      height: 50px;
     }
-    
     .screw {
-        position: absolute;
-        width: 38px;
-        height: 38px;
-        background: #4d4c4c;
-        border-radius: 50%;
-        box-shadow:
-                0 4px 8px rgba(0,0,0,0.5),
-                inset 0 2px 4px rgba(255,255,255,0.4),
-                inset 0 -2px 4px rgba(0,0,0,0.3);
-        z-index: 4;
+      width: 24px;
+      height: 24px;
     }
-
-    .screw::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 10%;
-        height: 55%;
-        background: #222;
-        border-radius: 1px;
-        transform: translate(-50%, -50%);
-        box-shadow:
-                inset 0 2px 3px rgba(0,0,0,0.8),
-                inset 0 -1px 2px rgba(0,0,0,0.6),
-                0 1px 1px rgba(255,255,255,0.3);
-    }
-
     .peg {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        background: linear-gradient(
-                135deg,
-                #D2B48C 0%,
-                #CD853F 25%,
-                #A0522D 50%,
-                #8B4513 75%,
-                #654321 100%
-        );
-        border-radius: 50%;
-        box-shadow:
-                inset 2px 2px 4px rgba(255,255,255,0.4),
-                inset -2px -2px 4px rgba(0,0,0,0.4),
-                0 2px 6px rgba(0,0,0,0.3);
-        z-index: 4;
+      top: 5px;
+      width: 10px;
+      height: 10px;
     }
-
     .creation {
-        margin-top: calc(var(--spacing) * 10);
+      margin-top: calc(var(--spacing) * 5);
     }
-
-    .hanging-string {
-        position: absolute;
-        top: 3px;
-        left: 50%;
-        width: 3px;
-        height: 40%;
-        background: linear-gradient(
-                90deg,
-                #E6D7C3 0%,
-                #F5F5DC 15%,
-                #E6D7C3 30%,
-                #F5F5DC 45%,
-                #E6D7C3 60%,
-                #F5F5DC 75%,
-                #E6D7C3 90%,
-                #F5F5DC 100%
-        );
-        transform: translateX(-50%);
-        border-radius: 2px;
-        box-shadow:
-                inset 1px 0 1px rgba(255,255,255,0.8),
-                inset -1px 0 1px rgba(0,0,0,0.2),
-                2px 2px 6px rgba(0,0,0,0.3);
+    .creation-tag {
+      top: 10px;
+      padding: 3px 6px;
+      font-size: 12px;
     }
-
-    .hanging-string::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 3px,
-                rgba(0,0,0,0.1) 3px,
-                rgba(0,0,0,0.1) 4px
-        );
-        border-radius: 2px;
-    }
-
-    @media only screen and (max-width: 600px) {
-        .pegboard-grid {
-            grid-auto-rows: 50px;
-        }
-        .pegboard-hole {
-            background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><rect x='0' y='0' width='100%' height='100%' fill-opacity='0'/><ellipse cx='50%' cy='52%' rx='12%' ry='12%' fill='%23c2a283'/><ellipse cx='50%' cy='50%' rx='12%' ry='12%' fill='%23111'/></svg>");
-            height: 50px;
-        }
-        .screw {
-            width: 24px;
-            height: 24px;
-        }
-        .peg {
-            top: 5px;
-            width: 10px;
-            height: 10px;
-        }
-        .creation {
-            margin-top: calc(var(--spacing) * 5)
-        }
-    }
+  }
 }
