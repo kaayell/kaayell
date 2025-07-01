@@ -1,7 +1,7 @@
 "use client";
 
 import { CloudinaryImage } from "@/lib/cloudinary";
-import { useMemo } from "react";
+import { use } from "react";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import _ from "lodash";
@@ -15,23 +15,21 @@ import {
 } from "@/lib/animations";
 
 interface CreationsGridProps {
-  creations: CloudinaryImage[];
+  creations: Promise<CloudinaryImage[]>;
 }
 
 export default function CreationsGrid({ creations }: CreationsGridProps) {
   const router = useRouter();
-
-  const creationsWithSpans = useMemo(() => {
-    return creations.map((image) => ({
-      ...image,
-      gridSpan: { col: 3, row: 4 },
-      totalFootprint: 3 * 4,
-    }));
-  }, [creations]);
-
-  const holeCount = useMemo(() => {
-    return _.sumBy(creationsWithSpans, (creation) => creation.totalFootprint);
-  }, [creationsWithSpans]);
+  const allCreations = use(creations);
+  const allCreationsWithSpans = allCreations.map((image) => ({
+    ...image,
+    gridSpan: { col: 3, row: 4 },
+    totalFootprint: 3 * 4,
+  }));
+  const holeCount = _.sumBy(
+    allCreationsWithSpans,
+    (creation) => creation.totalFootprint,
+  );
 
   return (
     <div className="h-full pt-24 px-8 md:px-18 lg:px-26">
@@ -54,7 +52,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
             initial={"initial"}
             animate={"animate"}
           >
-            {creationsWithSpans.map((image, index) => (
+            {allCreationsWithSpans.map((image, index) => (
               <motion.div
                 key={image.public_id}
                 className="group cursor-pointer relative creation"

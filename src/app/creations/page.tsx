@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const creations = await getAllShowcaseImages();
+  const creations = getAllShowcaseImages();
 
   return (
     <Suspense fallback={<Loading />}>

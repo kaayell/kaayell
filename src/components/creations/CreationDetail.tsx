@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { CloudinaryImage } from "@/lib/cloudinary";
 import { CldImage } from "next-cloudinary";
 import Loading from "@/components/ui/Loading";
@@ -17,13 +17,15 @@ import {
 } from "@/lib/animations";
 
 interface CreationDetailPageProps {
-  creation: CloudinaryImage;
+  creation: Promise<CloudinaryImage>;
 }
 
 export default function CreationDetailPage({
   creation,
 }: CreationDetailPageProps) {
-  const [selectedImage, setSelectedImage] = useState<CloudinaryImage>(creation);
+  const creationDetail = use(creation);
+  const [selectedImage, setSelectedImage] =
+    useState<CloudinaryImage>(creationDetail);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -44,9 +46,9 @@ export default function CreationDetailPage({
     router.back();
   };
 
-  const relatedAssets = creation.related_assets
-    ? [...[creation], ...creation.related_assets]
-    : [creation];
+  const relatedAssets = creationDetail.related_assets
+    ? [...[creationDetail], ...creationDetail.related_assets]
+    : [creationDetail];
 
   // Keyboard navigation
   useEffect(() => {
@@ -93,7 +95,7 @@ export default function CreationDetailPage({
             className="text-right text-xl md:text-2xl font-light text-neutral-500"
             {...createDelayedAnimation(0.4, slideInFromRight)}
           >
-            {creation.display_name}
+            {creationDetail.display_name}
           </motion.h1>
         </div>
       </div>
@@ -136,9 +138,9 @@ export default function CreationDetailPage({
                 >
                   <CldImage
                     src={selectedImage.public_id}
-                    width={creation.width}
-                    height={creation.height}
-                    alt={creation.display_name}
+                    width={creationDetail.width}
+                    height={creationDetail.height}
+                    alt={creationDetail.display_name}
                     className="w-full h-full object-contain pointer-events-none md:pointer-events-auto"
                     onLoad={handleImageLoad}
                     priority
@@ -173,7 +175,7 @@ export default function CreationDetailPage({
                         src={image.public_id}
                         width={150}
                         height={150}
-                        alt={`${creation.display_name} - View ${index + 1}`}
+                        alt={`${creationDetail.display_name} - View ${index + 1}`}
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -210,7 +212,7 @@ export default function CreationDetailPage({
                     src={image.public_id}
                     width={100}
                     height={100}
-                    alt={`${creation.display_name} - View ${index + 1}`}
+                    alt={`${creationDetail.display_name} - View ${index + 1}`}
                     className="w-full h-full object-contain"
                   />
                 </div>
