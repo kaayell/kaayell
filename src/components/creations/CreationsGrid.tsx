@@ -13,6 +13,7 @@ import {
   staggerContainer,
   swingAnimation,
 } from "@/lib/animations";
+import Pegboard from "@/components/ui/Pegboard";
 
 interface CreationsGridProps {
   creations: Promise<CloudinaryImage[]>;
@@ -33,65 +34,52 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
 
   return (
     <div className="w-full h-full mt-24 px-5 md:pl-0 md:pr-18">
-      <div className="relative min-h-screen w-full p-5 md:p-10 rounded-2xl pegboard">
-        <div className="screw top-2 left-2 md:top-5 md:left-5" />
-        <div className="screw top-2 right-2 md:top-5 md:right-5" />
-        <div className="screw bottom-2 left-2 md:bottom-5 md:left-5" />
-        <div className="screw bottom-2 right-2 md:bottom-5 md:right-5" />
+      <Pegboard holeCount={holeCount}>
+        <motion.div
+          className="pegboard-grid absolute inset-0"
+          variants={staggerContainer}
+          initial={"initial"}
+          animate={"animate"}
+        >
+          {allCreationsWithSpans.map((image, index) => (
+            <motion.div
+              key={image.public_id}
+              className="group cursor-pointer relative creation"
+              style={{
+                gridColumn: `span ${image.gridSpan.col}`,
+                gridRow: `span ${image.gridSpan.row}`,
+              }}
+              variants={createStaggerItem(fadeInUp)}
+              onClick={() => router.push(`/creations/${image.public_id}`)}
+            >
+              <div className="peg" />
+              <div className="creation-tag">{image.display_name}</div>
 
-        <div className="relative w-full h-full">
-          <div className="w-full h-full pegboard-grid">
-            {[...new Array(holeCount)].map((_, index) => {
-              return <div key={`peg-${index}`} className="pegboard-hole" />;
-            })}
-          </div>
-
-          <motion.div
-            className="pegboard-grid absolute inset-0"
-            variants={staggerContainer}
-            initial={"initial"}
-            animate={"animate"}
-          >
-            {allCreationsWithSpans.map((image, index) => (
               <motion.div
-                key={image.public_id}
-                className="group cursor-pointer relative creation"
-                style={{
-                  gridColumn: `span ${image.gridSpan.col}`,
-                  gridRow: `span ${image.gridSpan.row}`,
-                }}
-                variants={createStaggerItem(fadeInUp)}
-                onClick={() => router.push(`/creations/${image.public_id}`)}
+                className="w-full h-full"
+                {...swingAnimation(index)}
+                style={{ transformOrigin: "center top" }}
               >
-                <div className="peg" />
-                <div className="creation-tag">{image.display_name}</div>
-
-                <motion.div
-                  className="w-full h-full"
-                  {...swingAnimation(index)}
-                  style={{ transformOrigin: "center top" }}
-                >
-                  <div className="hanging-string" />
-                  <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
-                    <CldImage
-                      key={`${image.public_id}-${index}`}
-                      src={image.public_id}
-                      alt={image.display_name}
-                      width={image.width}
-                      height={image.height}
-                      className="w-full h-full object-contain z-10"
-                      style={{
-                        filter:
-                          "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
-                      }}
-                    />
-                  </motion.div>
+                <div className="hanging-string" />
+                <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
+                  <CldImage
+                    key={`${image.public_id}-${index}`}
+                    src={image.public_id}
+                    alt={image.display_name}
+                    width={image.width}
+                    height={image.height}
+                    className="w-full h-full object-contain z-10"
+                    style={{
+                      filter:
+                        "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
+                    }}
+                  />
                 </motion.div>
               </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Pegboard>
     </div>
   );
 }
