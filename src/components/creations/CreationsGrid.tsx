@@ -32,7 +32,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
   );
 
   return (
-    <div className="h-full pt-24 px-8 md:px-18 lg:px-26">
+    <div className="w-full h-full mt-24 px-5 md:pl-0 md:pr-18">
       <div className="relative min-h-screen w-full p-5 md:p-10 rounded-2xl pegboard">
         <div className="screw top-2 left-2 md:top-5 md:left-5" />
         <div className="screw top-2 right-2 md:top-5 md:right-5" />

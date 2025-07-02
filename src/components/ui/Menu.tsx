@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { rotate45, scaleOnHover } from "@/lib/animations";
+import { scaleOnHover, slideInFromTop } from "@/lib/animations";
+import Logo from "@/components/layout/Logo";
 
 type MenuProps = {
   isMenuOpen: boolean;
@@ -10,19 +11,12 @@ export default function Menu({ isMenuOpen, setIsMenuOpen }: MenuProps) {
   return (
     <motion.button
       onClick={() => setIsMenuOpen(!isMenuOpen)}
-      className="relative flex items-center justify-center w-12 h-12 focus:outline-none group"
+      className="relative flex items-center justify-center w-20 h-20 cursor-pointer"
       {...scaleOnHover}
+      {...slideInFromTop}
       aria-label="Toggle menu"
     >
-      {/* circle on hover */}
-      <motion.div className="absolute inset-0 bg-neutral-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in duration-300" />
-
-      <motion.div
-        className="relative text-neutral-400 group-hover:text-neutral-900 font-mono text-3xl transition-colors duration-300"
-        {...rotate45(isMenuOpen)}
-      >
-        {isMenuOpen ? "×" : "+"}
-      </motion.div>
+      <Logo />
     </motion.button>
   );
 }

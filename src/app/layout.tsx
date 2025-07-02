@@ -22,9 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.className} ${geistMono.className}`}>
-        <Header />
-        <SideLinks />
-        <main>{children}</main>
+        <div className="grid min-h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
+          <div className="col-span-5">
+            <Header />
+          </div>
+
+          <div className="hidden h-full md:row-start-2 md:flex">
+            <SideLinks />
+          </div>
+
+          <main className="col-start-2 flex h-full w-full">{children}</main>
+        </div>
       </body>
     </html>
   );
