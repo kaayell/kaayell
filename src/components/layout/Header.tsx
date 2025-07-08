@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 h-24 flex items-center justify-between z-50">
+      <header className="fixed h-14 md:h-24 flex items-center justify-between z-50">
         <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       </header>
 

@@ -33,7 +33,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
   );
 
   return (
-    <div className="w-full h-full mt-24 px-5 md:pl-0 md:pr-18">
+    <div className="w-full h-full mt-14 md:mt-24 px-5 md:pl-0 md:pr-18">
       <Pegboard holeCount={holeCount}>
         <motion.div
           className="pegboard-grid absolute inset-0"
@@ -44,7 +44,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
           {allCreationsWithSpans.map((image, index) => (
             <motion.div
               key={image.public_id}
-              className="group cursor-pointer relative creation"
+              className="group cursor-pointer relative mt-5 md:mt-10"
               style={{
                 gridColumn: `span ${image.gridSpan.col}`,
                 gridRow: `span ${image.gridSpan.row}`,
@@ -53,7 +53,9 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
               onClick={() => router.push(`/creations/${image.public_id}`)}
             >
               <div className="peg" />
-              <div className="creation-tag">{image.display_name}</div>
+              <div className="absolute top-[10px] md:top-[20px] left-1/2 translate-x-[-50%] z-1 creation-label text-xs">
+                {image.display_name}
+              </div>
 
               <motion.div
                 className="w-full h-full"
@@ -61,14 +63,17 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
                 style={{ transformOrigin: "center top" }}
               >
                 <div className="hanging-string" />
-                <motion.div className="w-full h-full pt-10" {...scaleOnHover}>
+                <motion.div
+                  className="relative w-full h-full pt-10 z-10"
+                  {...scaleOnHover}
+                >
                   <CldImage
                     key={`${image.public_id}-${index}`}
                     src={image.public_id}
                     alt={image.display_name}
                     width={image.width}
                     height={image.height}
-                    className="w-full h-full object-contain z-10"
+                    className="w-full h-full object-contain"
                     style={{
                       filter:
                         "drop-shadow(3px 4px 12px rgba(0, 0, 0, 0.50)) drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.20))",
