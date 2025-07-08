@@ -26,9 +26,12 @@ export default function CreationDetailPage({
   const creationDetail = use(creation);
   const [selectedImage, setSelectedImage] =
     useState<CloudinaryImage>(creationDetail);
+  const router = useRouter();
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter();
+  const relatedAssets = creationDetail.related_assets
+    ? [...[creationDetail], ...creationDetail.related_assets]
+    : [creationDetail];
 
   const handleThumbnailClick = (image: CloudinaryImage, index: number) => {
     if (selectedImageIndex !== index) {
@@ -38,25 +41,13 @@ export default function CreationDetailPage({
     }
   };
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
-
-  const handleBackClick = () => {
-    router.back();
-  };
-
-  const relatedAssets = creationDetail.related_assets
-    ? [...[creationDetail], ...creationDetail.related_assets]
-    : [creationDetail];
-
   return (
     <div className="h-screen w-full max-w-screen max-h-screen pt-14 pb-5 px-5 md:pl-0 md:pr-18">
       <Pegboard>
         <div className="flex items-center justify-between py-4 md:p-4">
           <motion.div {...createDelayedAnimation(0.4, slideInFromLeft)}>
             <motion.button
-              onClick={handleBackClick}
+              onClick={() => router.back()}
               className="creation-label inline-flex items-center transition-colors duration-300"
               whileHover={{ x: -3 }}
             >
@@ -108,20 +99,20 @@ export default function CreationDetailPage({
 
           <motion.div className="flex-1 min-h-0" {...slideInFromBottom}>
             <div className="w-full h-full">
-              {isLoading && <Loading />}
-
               <motion.div
                 className="w-full h-full p-2 md:p-4"
                 layoutId={`image-${selectedImage.public_id}`}
                 key={selectedImage.public_id}
               >
+                {isLoading && <Loading />}
+
                 <CldImage
                   src={selectedImage.public_id}
                   width={creationDetail.width}
                   height={creationDetail.height}
                   alt={creationDetail.display_name}
                   className="w-full h-full object-contain pointer-events-none md:pointer-events-auto"
-                  onLoad={handleImageLoad}
+                  onLoad={() => setIsLoading(false)}
                   priority
                 />
               </motion.div>

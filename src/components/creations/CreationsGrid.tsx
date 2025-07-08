@@ -53,7 +53,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
               onClick={() => router.push(`/creations/${image.public_id}`)}
             >
               <div className="peg" />
-              <div className="absolute top-[10px] md:top-[20px] left-1/2 translate-x-[-50%] z-1 creation-label text-xs">
+              <div className="creation-tag creation-label">
                 {image.display_name}
               </div>
 
