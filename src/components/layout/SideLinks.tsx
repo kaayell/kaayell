@@ -24,7 +24,7 @@ export default function SideLinks() {
             href={link.url}
             target={link.target}
             rel={link.rel}
-            className="text-neutral-500 hover:text-neutral-100 transition-colors duration-300"
+            className="text-neutral-3 hover:text-neutral-2 transition-colors duration-300"
             variants={createStaggerItem(fadeInUp)}
           >
             {link.icon}
@@ -33,7 +33,7 @@ export default function SideLinks() {
         ))}
       </motion.div>
 
-      <motion.div className="w-0.5 h-16 bg-neutral-500" {...verticalLine} />
+      <motion.div className="w-0.5 h-16 bg-neutral-2" {...verticalLine} />
     </div>
   );
 }

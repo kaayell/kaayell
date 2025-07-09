@@ -16,9 +16,9 @@ export default function HeroSection() {
         className={`mb-8 text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight ${courierPrime.className}`}
         {...createDelayedAnimation(0.2, fadeInUp)}
       >
-        <span className="text-neutral-100">kaay</span>
-        <span className="text-neutral-500">•</span>
-        <span className="text-neutral-100">ell</span>
+        <span className="text-neutral-3">kaay</span>
+        <span className="text-neutral-2">•</span>
+        <span className="text-neutral-3">ell</span>
       </motion.h1>
 
       <motion.div
@@ -26,12 +26,12 @@ export default function HeroSection() {
         {...createDelayedAnimation(0.4, fadeInUp)}
       >
         <h2
-          className={`text-3xl md:text-4xl text-neutral-300 ${fredericka.className}`}
+          className={`text-3xl md:text-4xl text-neutral-4 ${fredericka.className}`}
         >
           KL
         </h2>
         <h3
-          className={`text-2xl md:text-3xl text-neutral-400 ${lavishlyYours.className}`}
+          className={`text-2xl md:text-3xl text-neutral-4 ${lavishlyYours.className}`}
         >
           kristie-lynne
         </h3>
@@ -43,17 +43,17 @@ export default function HeroSection() {
             className="inline-flex items-center group cursor-pointer"
             {...slideOnHover}
           >
-            <span className="text-lg font-medium text-neutral-100 mr-4 group-hover:text-white transition-colors">
+            <span className="text-lg font-medium text-neutral-4 mr-4 group-hover:text-neutral-3 transition-colors">
               View Creations
             </span>
             <motion.div
-              className="w-12 h-0.5 bg-neutral-100 group-hover:bg-white transition-colors"
+              className="w-12 h-0.5 bg-neutral-4 group-hover:bg-neutral-3 transition-colors"
               initial={{ width: 48 }}
               whileHover={{ width: 64 }}
               transition={{ duration: 0.3 }}
             />
             <motion.svg
-              className="w-4 h-4 ml-2 text-neutral-100 group-hover:text-white transition-colors"
+              className="w-4 h-4 ml-2 text-neutral-4 group-hover:text-neutral-3 transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

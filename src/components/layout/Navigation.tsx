@@ -32,7 +32,7 @@ export default function Navigation({
     <AnimatePresence>
       {isMenuOpen && (
         <motion.div
-          className="fixed inset-0 bg-neutral-900 z-40"
+          className="fixed inset-0 bg-neutral-1 z-40"
           {...springInFromBottom}
         >
           <div className="flex flex-col justify-center items-center h-full px-8">
@@ -55,8 +55,8 @@ export default function Navigation({
                         onClick={() => setIsMenuOpen(false)}
                         className={`block text-4xl md:text-6xl lg:text-7xl font-light tracking-tight transition-colors duration-300 ${
                           isActive
-                            ? "text-neutral-500"
-                            : "text-neutral-400 hover:bg-neutral-500"
+                            ? "text-neutral-3"
+                            : "text-neutral-2 hover:bg-neutral-4"
                         }`}
                       >
                         {item.name}
@@ -68,7 +68,7 @@ export default function Navigation({
             </nav>
 
             <motion.div
-              className="w-24 h-px my-6 bg-neutral-600"
+              className="w-24 h-px my-6 bg-neutral-4"
               {...horizontalLine}
             />
 
@@ -81,7 +81,7 @@ export default function Navigation({
                       href={link.url}
                       target={link.target}
                       rel={link.rel}
-                      className="text-neutral-500 hover:text-neutral-100 transition-colors duration-300"
+                      className="text-neutral-3 hover:text-neutral-2 transition-colors duration-300"
                       {...scaleOnHover}
                     >
                       {link.icon}
