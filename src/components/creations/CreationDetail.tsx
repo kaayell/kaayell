@@ -32,6 +32,7 @@ export default function CreationDetailPage({
   const relatedAssets = creationDetail.related_assets
     ? [...[creationDetail], ...creationDetail.related_assets]
     : [creationDetail];
+  const creationType = creationDetail.asset_folder.split("/")[1];
 
   const handleThumbnailClick = (image: CloudinaryImage, index: number) => {
     if (selectedImageIndex !== index) {
@@ -66,7 +67,7 @@ export default function CreationDetailPage({
 
         <div className="h-[90%] px-2 md:px-4 flex flex-col md:flex-row">
           {relatedAssets.length > 1 && (
-            <div className="h-20 w-full overflow-x-auto md:h-full md:w-1/5 md:overflow-y-auto md:overflow-x-visible">
+            <div className="h-1/8 w-full overflow-x-auto scrollbar-hide md:h-full md:w-1/5 md:overflow-y-auto md:overflow-x-visible">
               <motion.div
                 className="flex flex-row gap-2 h-full md:flex-col md:space-y-2 md:gap-0"
                 variants={staggerContainer}
@@ -76,11 +77,7 @@ export default function CreationDetailPage({
                 {relatedAssets.map((image, index) => (
                   <motion.div
                     key={index}
-                    className={`relative aspect-square cursor-pointer overflow-hidden border-2 flex-shrink-0 w-16 h-16 md:w-auto md:h-auto ${
-                      selectedImageIndex === index
-                        ? "border-neutral-100 bg-neutral-800/50"
-                        : "border-neutral-600/50 bg-neutral-800/20 hover:border-neutral-500"
-                    }`}
+                    className={`creation-detail-image`}
                     variants={createStaggerItem(slideInFromBottom)}
                     onClick={() => handleThumbnailClick(image, index)}
                   >
@@ -98,9 +95,12 @@ export default function CreationDetailPage({
           )}
 
           <motion.div className="flex-1 min-h-0" {...slideInFromBottom}>
+            <div
+              className={`md:hidden ${creationType}-sticker absolute left-0`}
+            />
             <div className="w-full h-full">
               <motion.div
-                className="w-full h-full p-2 md:p-4"
+                className="w-full h-full md:p-4"
                 layoutId={`image-${selectedImage.public_id}`}
                 key={selectedImage.public_id}
               >
@@ -118,6 +118,10 @@ export default function CreationDetailPage({
               </motion.div>
             </div>
           </motion.div>
+
+          <div className="hidden md:flex flex-col items-center md:h-full md:w-1/5">
+            <div className={`${creationType}-sticker`} />
+          </div>
         </div>
       </Pegboard>
     </div>

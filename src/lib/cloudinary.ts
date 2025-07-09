@@ -8,6 +8,7 @@ cloudinary.config({
 
 export interface CloudinaryImage {
   asset_id: string;
+  asset_folder: string;
   public_id: string;
   display_name: string;
   related_assets?: CloudinaryImage[];

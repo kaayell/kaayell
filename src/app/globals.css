@@ -183,4 +183,36 @@
 
     @apply text-xs md:text-lg;
   }
+
+  .creation-detail-image {
+    @apply relative aspect-square cursor-pointer shadow-md w-auto h-auto p-2;
+    background: linear-gradient(
+      45deg,
+      hsl(42 28% 92%) 0%,
+      hsl(42 28% 85%) 50%,
+      hsl(42 28% 92%) 100%
+    );
+  }
+
+  .crochet-sticker {
+    @apply relative w-16 h-16 md:w-32 md:h-32 bg-[url(./stickers/crochet.png)] bg-cover bg-center -rotate-10 md:rotate-10;
+    filter: drop-shadow(2px 1px 2px #000);
+
+  }
+
+  .felting-sticker {
+    @apply relative w-18 h-16 md:w-36 md:h-32 bg-[url(./stickers/needle-felt.png)] bg-cover bg-center -rotate-10 md:rotate-10;
+    filter: drop-shadow(1px 1px 1px #000);
+
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
