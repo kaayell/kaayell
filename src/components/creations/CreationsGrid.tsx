@@ -33,7 +33,7 @@ export default function CreationsGrid({ creations }: CreationsGridProps) {
   );
 
   return (
-    <div className="w-full h-full mt-14 md:mt-24 px-5 md:pl-0 md:pr-18">
+    <div className="w-full h-full pt-14 pb-5 px-5 md:pt-6 md:mt-0 md:pl-0 md:pr-18">
       <Pegboard holeCount={holeCount}>
         <motion.div
           className="pegboard-grid absolute inset-0"

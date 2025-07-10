@@ -43,7 +43,7 @@ export default function CreationDetailPage({
   };
 
   return (
-    <div className="h-screen w-full max-w-screen max-h-screen pt-14 pb-5 px-5 md:pl-0 md:pr-18">
+    <div className="h-screen w-full max-w-screen max-h-screen pt-14 pb-5 px-5 md:pt-8 md:pl-0 md:pr-18">
       <Pegboard>
         <div className="flex items-center justify-between py-4 md:p-4">
           <motion.div {...createDelayedAnimation(0.4, slideInFromLeft)}>
