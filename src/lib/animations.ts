@@ -105,20 +105,12 @@ export const createDelayedAnimation = (delay: number, baseAnimation: any) => ({
   },
 });
 
-// UI elements
-export const arrowAnimation = {
-  animate: { x: [0, 8, 0] },
-  transition: {
-    duration: 2,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
-};
 export const verticalLine = {
   initial: { height: 0 },
   animate: { height: 64 },
   transition: { duration: 0.8, delay: 1.5, ease },
 };
+
 export const horizontalLine = {
   initial: { width: 0 },
   animate: { width: 96 },
@@ -133,22 +125,16 @@ export const dragAnimation = {
   whileDrag: { scale: 0.98 },
 };
 
-export const rotate45 = (isOpen: boolean) => ({
-  animate: { rotate: isOpen ? 45 : 0 },
-  transition: { duration: 0.3, ease },
-});
-
 export const swingAnimation = (index: number) => {
   return {
     initial: { rotate: -2 },
     animate: {
       rotate: [-2, 2, -2],
       transition: {
-        duration: 9,
+        duration: 6 + (index % 3),
         repeat: Infinity,
         ease: "easeInOut",
-        delay: 0.5 * index * 0.1,
-        repeatDelay: 0,
+        delay: 2 + index * 0.1,
       },
     },
     whileHover: { rotate: 0 },
