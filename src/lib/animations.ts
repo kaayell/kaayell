@@ -133,7 +133,7 @@ export const swingAnimation = (index: number) => {
       transition: {
         duration: 6 + (index % 3),
         repeat: Infinity,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
         delay: 2 + index * 0.1,
       },
     },
